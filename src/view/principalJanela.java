@@ -1,0 +1,116 @@
+package view;
+
+//IMPORTAÇÃO DE DEPENDENCIAS
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
+public class principalJanela extends JFrame {
+
+	private JFileChooser chooser;
+	private JPanel contentPane;
+	private String imagem;
+
+
+	public principalJanela() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(800, 350, 366, 364);
+
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setLayout(new BorderLayout(0, 0));
+
+		setContentPane(contentPane);
+
+		JInternalFrame internalFrame = new JInternalFrame("TelaPrincipal");
+		contentPane.add(internalFrame, BorderLayout.CENTER);
+
+		JButton btnFiltrarImagem = new JButton("Filtrar Imagem...");
+		internalFrame.getContentPane().add(btnFiltrarImagem, BorderLayout.SOUTH);
+
+		JButton btnComprimirSalvar = new JButton("Comprimir e Salvar imagem!");
+		contentPane.add(btnComprimirSalvar, BorderLayout.SOUTH);
+
+		//Torna o botão visível
+		btnComprimirSalvar.setVisible(true);
+
+		//Define acao do botão
+		btnFiltrarImagem.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent arg0) {
+				btnFiltrarImagem.setEnabled(false);;
+				btnComprimirSalvar.setVisible(true);
+				escolheArquivo();
+
+			}
+		});
+
+		btnComprimirSalvar.addActionListener(new ActionListener() {
+
+
+			public void actionPerformed(ActionEvent arg0) {
+				/*APLICAR COMPRESSÃO E SALVAR*/				
+			}
+		});
+
+		//Torna a janela principal visível
+		internalFrame.setVisible(true);
+	}
+
+	private void escolheArquivo(){
+
+		chooser = new JFileChooser();				
+		chooser.setCurrentDirectory(new java.io.File("."));
+		chooser.setAcceptAllFileFilterUsed(false);
+		FileFilter filter = new FileNameExtensionFilter(".PNG ","png");
+		chooser.setFileFilter(filter);
+		chooser.setDialogTitle("Seleção de imagem");
+
+
+		if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
+		{
+			imagem = chooser.getSelectedFile().getAbsolutePath();
+			//Map<String, Integer> result = new HashMap<String, Integer>();
+			//File directory = new File(chooser.getSelectedFile().getAbsolutePath()); //This is where you need to change.
+
+			/*File[] files = directory.listFiles();
+	        for (File file : files)
+	        {
+	            if (file.isFile())
+	            {
+	                Scanner scanner = null;
+					try {
+						scanner = new Scanner(new FileReader(file));
+					} catch (FileNotFoundException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+						JOptionPane.showInternalMessageDialog(null, "Não foi possível abrir o arquivo selecionado!");
+					}
+	                int lineCount = 0;
+	                try
+	                {
+	                    for (lineCount = 0; scanner.nextLine() != null; lineCount++)
+	                        ;
+	                } catch (NoSuchElementException e)
+	                {
+	                    result.put(file.getName(), lineCount);
+	                }
+	            }
+	        }*/	        	       
+		}			    	
+	}
+
+	public String getImagem() {
+		return imagem;
+	}
+
+}
