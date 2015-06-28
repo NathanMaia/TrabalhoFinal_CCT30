@@ -1,0 +1,823 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0063)http://desenvolvimentodejogos.wikidot.com/filtros-de-convolucao -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt" lang="pt"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Filtros de Convolução - Desenvolvimento de Jogos</title>
+    
+    
+    
+    <script type="text/javascript" async="" src="./Filtros de Convolução - Desenvolvimento de Jogos_files/vglnk.js"></script><script type="text/javascript" async="" src="./Filtros de Convolução - Desenvolvimento de Jogos_files/quant.js"></script><script type="text/javascript" async="" src="./Filtros de Convolução - Desenvolvimento de Jogos_files/dc.js"></script><script async="" type="text/javascript" src="./Filtros de Convolução - Desenvolvimento de Jogos_files/gpt.js"></script><script type="text/javascript">
+var googletag = googletag || {};
+googletag.cmd = googletag.cmd || [];
+(function() {
+var gads = document.createElement('script');
+gads.async = true;
+gads.type = 'text/javascript';
+var useSSL = 'https:' == document.location.protocol;
+gads.src = (useSSL ? 'https:' : 'http:') + 
+'//www.googletagservices.com/tag/js/gpt.js';
+var node = document.getElementsByTagName('script')[0];
+node.parentNode.insertBefore(gads, node);
+})();
+</script>
+
+<script type="text/javascript">
+googletag.cmd.push(function() {
+    // DEFINE DFP SLOTS
+googletag.defineSlot('/1030917/wikidot_free_sites_top_728x90', [728, 90], 'div-gpt-ad-1410946564449-1').addService(googletag.pubads());
+googletag.defineSlot('/1030917/wikidot_free_sites_bottom_300x250', [300, 250], 'div-gpt-ad-1410946564449-0').addService(googletag.pubads());
+googletag.defineOutOfPageSlot('/1030917/out_of_page', 'div-gpt-ad-1411637977813-0-oop').addService(googletag.pubads());
+
+// googletag.pubads().enableSingleRequest();
+googletag.pubads().collapseEmptyDivs(true, true);
+googletag.pubads().setTargeting("w_name", "desenvolvimentodejogos");
+googletag.pubads().setTargeting("w_domain", "com.wikidot.desenvolvimentodejogos");
+googletag.pubads().setTargeting("w_verified", "true");
+if(["software","education"]){googletag.pubads().setTargeting("w_cats", ["software","education"]);}
+if(false){googletag.pubads().setTargeting("w_mn", "true");}
+googletag.enableServices();
+});
+</script>
+<script type="text/javascript" src="./Filtros de Convolução - Desenvolvimento de Jogos_files/init.combined.js"></script><style type="text/css"></style><script async="" type="text/javascript" src="http://partner.googleadservices.com/gpt/pubads_impl_63.js"></script><script async="" type="text/javascript" src="./Filtros de Convolução - Desenvolvimento de Jogos_files/check_359604.js"></script><iframe src="about:blank" width="0" height="0" style="visibility: hidden !important; display: none !important; opacity: 0 !important;"></iframe>
+    <script type="text/javascript">
+        var URL_HOST = 'www.wikidot.com';
+        var URL_DOMAIN = 'wikidot.com';
+        var USE_SSL =  true ;
+        var URL_STATIC = 'http://d3g0gp89917ko0.cloudfront.net/v--951c46c9f044';
+        // global request information
+        
+        var WIKIREQUEST = {};
+        WIKIREQUEST.info = {};
+        
+        WIKIREQUEST.info.domain = "desenvolvimentodejogos.wikidot.com";
+        WIKIREQUEST.info.siteId = 4626;
+        WIKIREQUEST.info.siteUnixName = "desenvolvimentodejogos";
+        WIKIREQUEST.info.categoryId = 26002;
+        WIKIREQUEST.info.themeId = 7;
+        WIKIREQUEST.info.requestPageName = "filtros-de-convolucao";
+        OZONE.request.timestamp = 1434042441;
+        OZONE.request.date = new Date();
+        WIKIREQUEST.info.lang = 'pt';
+                WIKIREQUEST.info.pageUnixName = "filtros-de-convolucao";
+        WIKIREQUEST.info.pageId = 13224964;
+                        WIKIREQUEST.info.lang = "pt";
+        OZONE.lang = "pt";
+        var isUAMobile = !!/Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    </script>
+    
+    
+
+
+    
+        <script type="text/javascript">
+    
+        require.config({
+            baseUrl: URL_STATIC + '/common--javascript',
+            paths: {
+                'jquery.ui': 'jquery-ui.min',
+                'jquery.form': 'jquery.form'
+            }
+        });
+    
+    </script>
+    
+    
+            
+    
+    
+    
+    
+    <meta http-equiv="content-language" content="pt">
+    <script type="text/javascript" src="./Filtros de Convolução - Desenvolvimento de Jogos_files/WIKIDOT.combined.js"></script>
+        
+    
+    <style type="text/css">
+body {
+  background-position: center 24px;
+}
+</style>
+<style type="text/css" id="internal-style">
+        
+        /* modules */
+@import url(http://d3g0gp89917ko0.cloudfront.net/v--951c46c9f044/common--modules/css/wiki/pagestagcloud/PagesTagCloudModule.css);
+
+
+        
+                
+        /* theme */
+                    @import url(http://d3g0gp89917ko0.cloudfront.net/v--951c46c9f044/common--theme/base/css/style.css);
+                    @import url(http://d3g0gp89917ko0.cloudfront.net/v--951c46c9f044/common--theme/flannel-ocean/css/style.css);
+            </style>
+    
+        
+        
+        
+    <link rel="shortcut icon" href="http://desenvolvimentodejogos.wikidot.com/local--favicon/favicon.gif">
+    <link rel="icon" type="image/gif" href="http://desenvolvimentodejogos.wikidot.com/local--favicon/favicon.gif">
+    
+            <link rel="apple-touch-icon" href="http://desenvolvimentodejogos.wikidot.com/common--images/apple-touch-icon-57x57.png">
+        <link rel="apple-touch-icon" sizes="72x72" href="http://desenvolvimentodejogos.wikidot.com/common--images/apple-touch-icon-72x72.png">
+        <link rel="apple-touch-icon" sizes="114x114" href="http://desenvolvimentodejogos.wikidot.com/common--images/apple-touch-icon-114x114.png">
+        
+        
+            <link rel="alternate" type="application/wiki" title="Edit this page" href="javascript:WIKIDOT.page.listeners.editClick()">
+    
+        <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-18234656-1']);
+        _gaq.push(['_setDomainName', 'none']);
+        _gaq.push(['_setAllowLinker', true]);
+        _gaq.push(['_trackPageview']);
+
+        _gaq.push(['old._setAccount', 'UA-68540-5']);
+        _gaq.push(['old._setDomainName', 'none']);
+        _gaq.push(['old._setAllowLinker', true]);
+        _gaq.push(['old._trackPageview']);
+
+            </script>
+    
+    <script type="text/javascript">
+        window.google_analytics_uacct = 'UA-18234656-1';
+        window.google_analytics_domain_name = 'none';
+    </script>
+    
+    <script type="text/javascript" src="./Filtros de Convolução - Desenvolvimento de Jogos_files/NewPageHelperModule.js"></script>
+<script type="text/javascript" async="" src="http://a.getgamers.eu/?id=9877320"></script><style type="text/css">* {
+ text-shadow: transparent 0px 0px 0px, rgba(0,0,0,1) 0px 0px 0px !important; 
+}</style></head>
+<body id="html-body">
+<div id="skrollr-body">
+<a name="page-top"></a>
+<div id="navi-bar">
+  <a class="logo" href="http://www.wikidot.com/">
+    <span>Wikidot.com</span>
+  </a>
+  
+  <div class="new-site">
+    <form method="get" action="http://www.wikidot.com/new-site">
+      <input class="text empty" type="text" name="address" value="nome-do-site">.<a class="vglnk" href="http://wikidot.com/" rel="nofollow"><span>wikidot</span><span>.</span><span>com</span></a>
+    </form>
+  </div>
+  
+    <div class="share">
+    <span>Partilhar em</span>
+    <a class="twitter" target="_blank" rel="nofollow" href="http://twitter.com/home?status=Filtros%20de%20Convolu%C3%A7%C3%A3o%20-%20Desenvolvimento%20de%20Jogos+http%3A%2F%2Fdesenvolvimentodejogos.wikidot.com%2Ffiltros-de-convolucao" title="Share on Twitter"><img src="./Filtros de Convolução - Desenvolvimento de Jogos_files/twitter.png" alt="twitter"></a>  
+    <a class="facebook" target="_blank" rel="nofollow" href="http://www.facebook.com/share.php?u=http%3A%2F%2Fdesenvolvimentodejogos.wikidot.com%2Ffiltros-de-convolucao&t=Filtros%20de%20Convolu%C3%A7%C3%A3o%20-%20Desenvolvimento%20de%20Jogos" title="Share on Facebook"><img src="./Filtros de Convolução - Desenvolvimento de Jogos_files/facebook.gif" alt="Facebook"></a>  
+    <a class="delicious" target="_blank" rel="nofollow" href="http://delicious.com/save" title="Share on Delicious"><img src="./Filtros de Convolução - Desenvolvimento de Jogos_files/delicious.png" alt="Delicious"></a>
+    <a class="digg" target="_blank" rel="nofollow" href="http://digg.com/submit?url=http%3A%2F%2Fdesenvolvimentodejogos.wikidot.com%2Ffiltros-de-convolucao&title=Filtros%20de%20Convolu%C3%A7%C3%A3o%20-%20Desenvolvimento%20de%20Jogos" title="Post to Digg"><img src="./Filtros de Convolução - Desenvolvimento de Jogos_files/digg.png" alt="Digg"></a>
+    <a class="reddit" href="http://www.reddit.com/submit?url=http%3A%2F%2Fdesenvolvimentodejogos.wikidot.com%2Ffiltros-de-convolucao" rel="nofollow" target="_blank" title="Post to Reddit"><img src="./Filtros de Convolução - Desenvolvimento de Jogos_files/reddit.png" alt="Reddit" border="0"></a>
+    <a class="stumbleupon" href="http://www.stumbleupon.com/submit?url=http%3A%2F%2Fdesenvolvimentodejogos.wikidot.com%2Ffiltros-de-convolucao" rel="nofollow" target="_blank" title="Post to StumbleUpon"><img src="./Filtros de Convolução - Desenvolvimento de Jogos_files/stumble.png" alt="Reddit" border="0"></a>
+  </div>
+    
+      <a class="join" href="javascript:;" onclick="WIKIDOT.page.listeners.join(event, &#39;create_account&#39;)">Join this site</a>
+    
+      <div class="action-buttons">
+      <a href="javascript:;" onclick="WIKIDOT.page.listeners.editClick(event)" title="Clicar aqui para editar o conteúdo desta página">Editar</a>
+      <a href="javascript:;" onclick="WIKIDOT.page.listeners.historyClick(event)" title="Check out how this page has evolved in the past.">Histórico</a>
+      <a href="javascript:;" onclick="WIKIDOT.page.listeners.editTags(event)" title="Edit tags for this page.">Etiquetas</a>
+      <a href="javascript:;" onclick="WIKIDOT.page.listeners.viewSourceClick(event)" title="Ver fonte desta página sem a editar.">Fonte</a>
+    </div>
+    
+  <a class="random-site" href="http://desenvolvimentodejogos.wikidot.com/random-site.php" title="Go to a random Wikidot site.">Explorar »</a>
+  </div>
+<div id="navi-bar-shadow">&nbsp;</div>
+
+
+<script type="text/javascript">
+  //<![CDATA[
+  $j(function(){
+    var uri = window.location.href;
+    var title = document.title
+    
+    $j('#navi-bar .share a').each(function(){
+      $t = $j(this);
+      var u = $t.attr('href');
+      u = u.replace(/TITLE/, encodeURIComponent(title)).replace(/URI/, encodeURIComponent(uri));
+      $t.attr('href', u);
+    });
+    
+    $j('#navi-bar .share .facebook').click(function(e){
+      window.open('http://www.facebook.com/sharer.php?u='+encodeURIComponent(uri)+'&t='+encodeURIComponent(title),'sharer','toolbar=0,status=0,width=626,height=436');
+      e.preventDefault();
+    });
+    $j('#navi-bar .share .delicious').click(function(e){
+      window.open('http://delicious.com/save?v=5&amp;noui&amp;jump=close&amp;url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title), 'delicious','toolbar=no,width=550,height=550');
+      e.preventDefault();
+    });
+  });
+  
+	$j('#navi-bar .new-site form').submit(function(e){
+	  e.preventDefault();
+	  var $i = $j('#navi-bar .new-site form input.text');
+	  if($i.hasClass('empty')){
+	    	var w = new OZONE.dialogs.ErrorDialog();
+  			w.content = "You need to enter a valid web address for your new wiki.";
+  			w.show();
+  			return;
+    }
+    var siteName = $i.attr('value');
+    siteName = siteName.replace(/^\s+/, '').replace(/\s+$/,'');
+		var p = {};
+		p.action = 'wiki/special/NewWikiWidgetAction';
+		p.event = 'newWiki';
+		p.siteName = siteName;
+		OZONE.ajax.requestModule(null, p, function(r){
+		  if(r.status == 'site_exists'){
+		    window.location.href = 'http://' + siteName + '.' + URL_DOMAIN;
+		    return;
+		  }
+		  if(!WIKIDOT.utils.handleError(r)) {return;}
+  		// seems fine.
+  		window.location.href='http://'+URL_HOST+'/new-site/address/'+r.unixName;
+		});
+	});
+	$j('#navi-bar .new-site form input.text').focus(function(){
+	  var $t = $j(this);
+	  if($t.hasClass('empty')){
+	    $t.removeClass('empty');
+	    $t.attr('value', '');
+	  }
+	});
+	//]]>
+</script>
+
+
+<div id="container-wrap-wrap">
+    <div id="container-wrap">
+        <div id="container">
+            <div id="header">
+              <h1><a href="http://desenvolvimentodejogos.wikidot.com/"><span>Desenvolvimento de Jogos</span></a></h1>
+                
+                    <h2><span>Tecnologias para uso no desenvolver jogos</span></h2>
+                
+                
+                <!-- google_ad_section_start(weight=ignore) -->
+                
+                <div id="search-top-box" class="form-search">
+    <form id="search-top-box-form" action="http://desenvolvimentodejogos.wikidot.com/dummy" class="input-append">
+        <input id="search-top-box-input" class="text empty search-query" type="text" size="15" name="query" value="Procurar neste site" onfocus="if(YAHOO.util.Dom.hasClass(this, &#39;empty&#39;)){YAHOO.util.Dom.removeClass(this,&#39;empty&#39;); this.value=&#39;&#39;;}"><input class="button btn" type="submit" name="search" value="Procurar">
+    </form>
+</div>
+                
+                
+                    <div id="top-bar">
+                        
+
+<ul>
+<li><a href="javascript:;">Iniciantes</a>
+<ul>
+<li><a href="http://desenvolvimentodejogos.wikidot.com/iniciomodelagem">Modelagem</a></li>
+<li><a href="http://desenvolvimentodejogos.wikidot.com/inicianteprogramacao">Programação</a></li>
+<li><a href="http://desenvolvimentodejogos.wikidot.com/game-design">Game Design</a></li>
+</ul>
+</li>
+<li><a href="http://desenvolvimentodejogos.wikidot.com/programacao">Programação</a>
+<ul>
+<li><a href="http://desenvolvimentodejogos.wikidot.com/inicianteprogramacao">Iniciante</a></li>
+<li><a href="http://desenvolvimentodejogos.wikidot.com/caracteristicaslinguagens">Linguagens</a></li>
+<li><a href="http://desenvolvimentodejogos.wikidot.com/bibliotecas-e-apis">Bibliotecas e APIs</a></li>
+<li><a href="http://desenvolvimentodejogos.wikidot.com/ides">IDEs</a></li>
+<li><a href="http://desenvolvimentodejogos.wikidot.com/tutorialprogramacaoiniciante">Tutoriais</a></li>
+<li><a href="http://desenvolvimentodejogos.wikidot.com/codigos-fonte">Codigos Fonte</a></li>
+<li><a href="http://desenvolvimentodejogos.wikidot.com/utilitarios">Utilitários</a></li>
+</ul>
+</li>
+<li><a href="http://desenvolvimentodejogos.wikidot.com/modelagem">Modelagem</a>
+<ul>
+<li><a href="http://desenvolvimentodejogos.wikidot.com/iniciomodelagem">Iniciante</a></li>
+<li><a href="http://desenvolvimentodejogos.wikidot.com/programasmodelagem">Programas</a></li>
+<li><a href="http://desenvolvimentodejogos.wikidot.com/tutoriasmodelagem">Tutoriais</a></li>
+</ul>
+</li>
+<li><a class="newpage" href="http://desenvolvimentodejogos.wikidot.com/arte-sonora">Arte Sonora</a>
+<ul>
+<li><a href="http://desenvolvimentodejogos.wikidot.com/programas-para-edicao-sonora">programas para edição sonora</a></li>
+<li><a href="http://desenvolvimentodejogos.wikidot.com/som-em-jogos">Som em Jogos</a></li>
+</ul>
+</li>
+<li><a href="http://desenvolvimentodejogos.wikidot.com/tutoriais">Tutoriais</a>
+<ul>
+<li><a href="http://desenvolvimentodejogos.wikidot.com/tutorialprogramacaoiniciante">Programação</a></li>
+<li><a href="http://desenvolvimentodejogos.wikidot.com/tutoriasmodelagem">Modelagem</a></li>
+<li><a class="newpage" href="http://desenvolvimentodejogos.wikidot.com/tutoriassonora">Arte Sonora</a></li>
+</ul>
+</li>
+<li><a href="http://desenvolvimentodejogos.wikidot.com/forum:start">Forum</a></li>
+</ul>
+<ul>
+<li><a href="http://desenvolvimentodejogos.wikidot.com/ajuda">Ajuda</a>
+<ul>
+<li><a href="http://desenvolvimentodejogos.wikidot.com/o-que-e-um-site-wiki">O que é um site wiki</a></li>
+<li><a href="http://desenvolvimentodejogos.wikidot.com/como-editar-paginas-inicio-rapido">Como editar páginas - início rápido</a></li>
+<li><a href="http://desenvolvimentodejogos.wikidot.com/sintaxewiki">Sintaxe do Wiki</a></li>
+<li><a href="http://desenvolvimentodejogos.wikidot.com/system:join">Como se juntar a este site</a></li>
+<li><a href="http://desenvolvimentodejogos.wikidot.com/faq">faq</a></li>
+</ul>
+</li>
+<li><a href="http://desenvolvimentodejogos.wikidot.com/discussoes">Discussões</a></li>
+<li><a href="http://desenvolvimentodejogos.wikidot.com/mapa-do-site">Mapa do site</a></li>
+<li><a href="http://desenvolvimentodejogos.wikidot.com/to-do">TO DO</a></li>
+</ul>
+
+                    </div>
+                
+                <div id="login-status"><a href="javascript:;" onclick="WIKIDOT.page.listeners.createAccount(event)" class="login-status-create-account btn">Criar conta</a> <span>ou</span> <a href="javascript:;" onclick="WIKIDOT.page.listeners.loginClick(event)" class="login-status-sign-in btn btn-primary">Entrar</a> </div>
+                <div id="header-extra-div-1"><span></span></div><div id="header-extra-div-2"><span></span></div><div id="header-extra-div-3"><span></span></div>
+            </div>
+            
+            <div id="content-wrap">
+                
+                    <div id="side-bar">
+                        
+
+
+                        
+
+<ul>
+<li><a href="http://desenvolvimentodejogos.wikidot.com/inicio">Página de Início</a></li>
+</ul>
+<h1><span>Seções</span></h1>
+<div class="foldable-list-container">
+<ul>
+<li class="folded"><a href="http://desenvolvimentodejogos.wikidot.com/programacao">Programação</a>
+<ul style="display: none; visibility: visible; opacity: 1;">
+<li><a href="http://desenvolvimentodejogos.wikidot.com/inicianteprogramacao">Iniciantes</a></li>
+<li><a href="http://desenvolvimentodejogos.wikidot.com/programacao-para-consoles">Programação para Consoles</a></li>
+<li><a href="http://desenvolvimentodejogos.wikidot.com/bibliotecas-e-apis">Bibliotecas e APIs</a></li>
+<li><a href="http://desenvolvimentodejogos.wikidot.com/tutorialprogramacaoiniciante">Tutoriais</a></li>
+<li><a href="http://desenvolvimentodejogos.wikidot.com/demoscene">Demoscene</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="foldable-list-container">
+<ul>
+<li class="folded"><a href="http://desenvolvimentodejogos.wikidot.com/modelagem">Modelagem</a>
+<ul style="display: none; visibility: visible; opacity: 1;">
+<li><a href="http://desenvolvimentodejogos.wikidot.com/iniciomodelagem">Para quem está iniciando</a></li>
+<li><a href="http://desenvolvimentodejogos.wikidot.com/programasmodelagem">Programas</a></li>
+<li><a href="http://desenvolvimentodejogos.wikidot.com/tutoriasmodelagem">Tutoriais</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="foldable-list-container">
+<ul>
+<li class="folded"><a href="http://desenvolvimentodejogos.wikidot.com/materias">Matérias</a>
+<ul style="display: none; visibility: visible; opacity: 1;">
+<li><a href="http://desenvolvimentodejogos.wikidot.com/logica-de-programacao">Lógica de Programação</a></li>
+<li><a href="http://desenvolvimentodejogos.wikidot.com/computacao-grafica">Computação Gráfica</a></li>
+<li><a href="http://desenvolvimentodejogos.wikidot.com/animacao-por-computador">Animação por Computador</a></li>
+<li><a href="http://desenvolvimentodejogos.wikidot.com/inteligencia-artificial">Inteligência Artificial</a></li>
+<li><a class="newpage" href="http://desenvolvimentodejogos.wikidot.com/interacao-humano-computador">Interação Humano-Computador</a></li>
+<li><a href="http://desenvolvimentodejogos.wikidot.com/game-design">Game Design</a></li>
+<li><a href="http://desenvolvimentodejogos.wikidot.com/algoritmos">Algoritmos</a></li>
+<li><a href="http://desenvolvimentodejogos.wikidot.com/modelagem-geometrica">Modelagem Geométrica</a></li>
+<li><a href="http://desenvolvimentodejogos.wikidot.com/matematica">Matemática</a></li>
+<li><a href="http://desenvolvimentodejogos.wikidot.com/programacao-paralela">Programação Paralela</a></li>
+<li><a href="http://desenvolvimentodejogos.wikidot.com/geometria-computacional">Geometria computacional</a></li>
+<li><a href="http://desenvolvimentodejogos.wikidot.com/processamento-de-imagens">Processamento de imagens</a></li>
+<li><a href="http://desenvolvimentodejogos.wikidot.com/geometria">Geometria</a></li>
+<li><a href="http://desenvolvimentodejogos.wikidot.com/algebra">Álgebra</a></li>
+<li><a href="http://desenvolvimentodejogos.wikidot.com/fisica">Física</a></li>
+<li><a href="http://desenvolvimentodejogos.wikidot.com/redes">Redes</a></li>
+<li><a href="http://desenvolvimentodejogos.wikidot.com/visao-computacional">Visão computacional</a></li>
+<li><a href="http://desenvolvimentodejogos.wikidot.com/outras-materias">Outras matérias</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<br>
+<a href="http://desenvolvimentodejogos.wikidot.com/videos">Vídeos</a><br>
+<a href="http://desenvolvimentodejogos.wikidot.com/mercado">Mercado</a><br>
+<a href="http://desenvolvimentodejogos.wikidot.com/made-in-brasil">Made in **Brasil**</a><br>
+<a href="http://desenvolvimentodejogos.wikidot.com/recursos-multimidia">Recursos multimídia</a><br>
+<a href="http://desenvolvimentodejogos.wikidot.com/links">links</a><br>
+<a href="http://desenvolvimentodejogos.wikidot.com/glossario">Glossário</a><br>
+<a href="http://desenvolvimentodejogos.wikidot.com/livros">livros</a><br>
+<a href="http://desenvolvimentodejogos.wikidot.com/eventos">eventos</a><br>
+<a href="http://desenvolvimentodejogos.wikidot.com/competicoes-de-criacao-de-jogos">competições de criação de jogos</a>
+<div class="foldable-list-container">
+<ul>
+<li class="folded"><a href="http://desenvolvimentodejogos.wikidot.com/ajuda">Como usar o Wiki</a>
+<ul style="display: none; visibility: visible; opacity: 1;">
+<li><a href="http://desenvolvimentodejogos.wikidot.com/o-que-e-um-site-wiki">O que é um site Wiki?</a></li>
+<li><a href="http://desenvolvimentodejogos.wikidot.com/como-editar-paginas-inicio-rapido">Como Editar Paginas Inicio Rapido</a></li>
+<li><a href="http://desenvolvimentodejogos.wikidot.com/sintaxewiki">Sintaxe do Wiki</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<ul>
+<li><a href="http://desenvolvimentodejogos.wikidot.com/admin:manage">Gerente de Site</a></li>
+<li><a href="http://desenvolvimentodejogos.wikidot.com/system:list-all-pages">Listar todas as páginas</a></li>
+<li><a href="http://desenvolvimentodejogos.wikidot.com/system:join">Como se juntar a este site?</a></li>
+<li><a href="http://desenvolvimentodejogos.wikidot.com/system:members">Membros do site</a></li>
+</ul>
+<ul>
+<li><a href="http://desenvolvimentodejogos.wikidot.com/system:recent-changes">Mudanças recentes</a></li>
+</ul>
+	<div class="pages-tag-cloud-box">
+									<a class="tag" href="http://desenvolvimentodejogos.wikidot.com/system:page-tags/tag/2d" style="font-size: 200%; color: rgb(96, 96, 160);">2d</a>
+							<a class="tag" href="http://desenvolvimentodejogos.wikidot.com/system:page-tags/tag/android" style="font-size: 150%; color: rgb(112, 112, 176);">android</a>
+							<a class="tag" href="http://desenvolvimentodejogos.wikidot.com/system:page-tags/tag/apis" style="font-size: 100%; color: rgb(128, 128, 192);">apis</a>
+							<a class="tag" href="http://desenvolvimentodejogos.wikidot.com/system:page-tags/tag/basic" style="font-size: 100%; color: rgb(128, 128, 192);">basic</a>
+							<a class="tag" href="http://desenvolvimentodejogos.wikidot.com/system:page-tags/tag/blitz" style="font-size: 117%; color: rgb(123, 123, 187);">blitz</a>
+							<a class="tag" href="http://desenvolvimentodejogos.wikidot.com/system:page-tags/tag/blitz3d" style="font-size: 100%; color: rgb(128, 128, 192);">blitz3d</a>
+							<a class="tag" href="http://desenvolvimentodejogos.wikidot.com/system:page-tags/tag/c" style="font-size: 233%; color: rgb(85, 85, 149);">c</a>
+							<a class="tag" href="http://desenvolvimentodejogos.wikidot.com/system:page-tags/tag/c%23" style="font-size: 133%; color: rgb(117, 117, 181);">c#</a>
+							<a class="tag" href="http://desenvolvimentodejogos.wikidot.com/system:page-tags/tag/c%2B%2B" style="font-size: 233%; color: rgb(85, 85, 149);">c++</a>
+							<a class="tag" href="http://desenvolvimentodejogos.wikidot.com/system:page-tags/tag/cg" style="font-size: 117%; color: rgb(123, 123, 187);">cg</a>
+							<a class="tag" href="http://desenvolvimentodejogos.wikidot.com/system:page-tags/tag/competi%C3%A7%C3%B5es" style="font-size: 100%; color: rgb(128, 128, 192);">competições</a>
+							<a class="tag" href="http://desenvolvimentodejogos.wikidot.com/system:page-tags/tag/compiladores" style="font-size: 100%; color: rgb(128, 128, 192);">compiladores</a>
+							<a class="tag" href="http://desenvolvimentodejogos.wikidot.com/system:page-tags/tag/cuda" style="font-size: 100%; color: rgb(128, 128, 192);">cuda</a>
+							<a class="tag" href="http://desenvolvimentodejogos.wikidot.com/system:page-tags/tag/delphi" style="font-size: 100%; color: rgb(128, 128, 192);">delphi</a>
+							<a class="tag" href="http://desenvolvimentodejogos.wikidot.com/system:page-tags/tag/directx" style="font-size: 133%; color: rgb(117, 117, 181);">directx</a>
+							<a class="tag" href="http://desenvolvimentodejogos.wikidot.com/system:page-tags/tag/distribui%C3%A7%C3%A3o" style="font-size: 100%; color: rgb(128, 128, 192);">distribuição</a>
+							<a class="tag" href="http://desenvolvimentodejogos.wikidot.com/system:page-tags/tag/ferramentas" style="font-size: 183%; color: rgb(101, 101, 165);">ferramentas</a>
+							<a class="tag" href="http://desenvolvimentodejogos.wikidot.com/system:page-tags/tag/f%C3%ADsica" style="font-size: 100%; color: rgb(128, 128, 192);">física</a>
+							<a class="tag" href="http://desenvolvimentodejogos.wikidot.com/system:page-tags/tag/fragment_shader" style="font-size: 100%; color: rgb(128, 128, 192);">fragment_shader</a>
+							<a class="tag" href="http://desenvolvimentodejogos.wikidot.com/system:page-tags/tag/game_design" style="font-size: 117%; color: rgb(123, 123, 187);">game_design</a>
+							<a class="tag" href="http://desenvolvimentodejogos.wikidot.com/system:page-tags/tag/game-engines" style="font-size: 283%; color: rgb(69, 69, 133);">game-engines</a>
+							<a class="tag" href="http://desenvolvimentodejogos.wikidot.com/system:page-tags/tag/game_maker" style="font-size: 117%; color: rgb(123, 123, 187);">game_maker</a>
+							<a class="tag" href="http://desenvolvimentodejogos.wikidot.com/system:page-tags/tag/glsl" style="font-size: 133%; color: rgb(117, 117, 181);">glsl</a>
+							<a class="tag" href="http://desenvolvimentodejogos.wikidot.com/system:page-tags/tag/gpgpu" style="font-size: 167%; color: rgb(107, 107, 171);">gpgpu</a>
+							<a class="tag" href="http://desenvolvimentodejogos.wikidot.com/system:page-tags/tag/gui" style="font-size: 150%; color: rgb(112, 112, 176);">gui</a>
+							<a class="tag" href="http://desenvolvimentodejogos.wikidot.com/system:page-tags/tag/hlsl" style="font-size: 133%; color: rgb(117, 117, 181);">hlsl</a>
+							<a class="tag" href="http://desenvolvimentodejogos.wikidot.com/system:page-tags/tag/html5" style="font-size: 200%; color: rgb(96, 96, 160);">html5</a>
+							<a class="tag" href="http://desenvolvimentodejogos.wikidot.com/system:page-tags/tag/ides" style="font-size: 100%; color: rgb(128, 128, 192);">ides</a>
+							<a class="tag" href="http://desenvolvimentodejogos.wikidot.com/system:page-tags/tag/imagem" style="font-size: 100%; color: rgb(128, 128, 192);">imagem</a>
+							<a class="tag" href="http://desenvolvimentodejogos.wikidot.com/system:page-tags/tag/ind%C3%BAstria" style="font-size: 117%; color: rgb(123, 123, 187);">indústria</a>
+							<a class="tag" href="http://desenvolvimentodejogos.wikidot.com/system:page-tags/tag/iniciante" style="font-size: 100%; color: rgb(128, 128, 192);">iniciante</a>
+							<a class="tag" href="http://desenvolvimentodejogos.wikidot.com/system:page-tags/tag/internet" style="font-size: 217%; color: rgb(91, 91, 155);">internet</a>
+							<a class="tag" href="http://desenvolvimentodejogos.wikidot.com/system:page-tags/tag/java" style="font-size: 250%; color: rgb(80, 80, 144);">java</a>
+							<a class="tag" href="http://desenvolvimentodejogos.wikidot.com/system:page-tags/tag/java3d" style="font-size: 100%; color: rgb(128, 128, 192);">java3d</a>
+							<a class="tag" href="http://desenvolvimentodejogos.wikidot.com/system:page-tags/tag/javascript" style="font-size: 117%; color: rgb(123, 123, 187);">javascript</a>
+							<a class="tag" href="http://desenvolvimentodejogos.wikidot.com/system:page-tags/tag/linguagem-de-script" style="font-size: 100%; color: rgb(128, 128, 192);">linguagem-de-script</a>
+							<a class="tag" href="http://desenvolvimentodejogos.wikidot.com/system:page-tags/tag/linux" style="font-size: 117%; color: rgb(123, 123, 187);">linux</a>
+							<a class="tag" href="http://desenvolvimentodejogos.wikidot.com/system:page-tags/tag/mercado" style="font-size: 100%; color: rgb(128, 128, 192);">mercado</a>
+							<a class="tag" href="http://desenvolvimentodejogos.wikidot.com/system:page-tags/tag/mobile" style="font-size: 100%; color: rgb(128, 128, 192);">mobile</a>
+							<a class="tag" href="http://desenvolvimentodejogos.wikidot.com/system:page-tags/tag/mono" style="font-size: 100%; color: rgb(128, 128, 192);">mono</a>
+							<a class="tag" href="http://desenvolvimentodejogos.wikidot.com/system:page-tags/tag/.net" style="font-size: 117%; color: rgb(123, 123, 187);">.net</a>
+							<a class="tag" href="http://desenvolvimentodejogos.wikidot.com/system:page-tags/tag/nvidia" style="font-size: 100%; color: rgb(128, 128, 192);">nvidia</a>
+							<a class="tag" href="http://desenvolvimentodejogos.wikidot.com/system:page-tags/tag/o3d" style="font-size: 100%; color: rgb(128, 128, 192);">o3d</a>
+							<a class="tag" href="http://desenvolvimentodejogos.wikidot.com/system:page-tags/tag/opencl" style="font-size: 117%; color: rgb(123, 123, 187);">opencl</a>
+							<a class="tag" href="http://desenvolvimentodejogos.wikidot.com/system:page-tags/tag/opengl" style="font-size: 300%; color: rgb(64, 64, 128);">opengl</a>
+							<a class="tag" href="http://desenvolvimentodejogos.wikidot.com/system:page-tags/tag/opengl_es" style="font-size: 117%; color: rgb(123, 123, 187);">opengl_es</a>
+							<a class="tag" href="http://desenvolvimentodejogos.wikidot.com/system:page-tags/tag/opengl_extensions" style="font-size: 133%; color: rgb(117, 117, 181);">opengl_extensions</a>
+							<a class="tag" href="http://desenvolvimentodejogos.wikidot.com/system:page-tags/tag/paralelismo" style="font-size: 133%; color: rgb(117, 117, 181);">paralelismo</a>
+							<a class="tag" href="http://desenvolvimentodejogos.wikidot.com/system:page-tags/tag/purebasic" style="font-size: 100%; color: rgb(128, 128, 192);">purebasic</a>
+							<a class="tag" href="http://desenvolvimentodejogos.wikidot.com/system:page-tags/tag/python" style="font-size: 150%; color: rgb(112, 112, 176);">python</a>
+							<a class="tag" href="http://desenvolvimentodejogos.wikidot.com/system:page-tags/tag/rascunho" style="font-size: 100%; color: rgb(128, 128, 192);">rascunho</a>
+							<a class="tag" href="http://desenvolvimentodejogos.wikidot.com/system:page-tags/tag/sdl" style="font-size: 100%; color: rgb(128, 128, 192);">sdl</a>
+							<a class="tag" href="http://desenvolvimentodejogos.wikidot.com/system:page-tags/tag/shaders" style="font-size: 183%; color: rgb(101, 101, 165);">shaders</a>
+							<a class="tag" href="http://desenvolvimentodejogos.wikidot.com/system:page-tags/tag/silverlight" style="font-size: 117%; color: rgb(123, 123, 187);">silverlight</a>
+							<a class="tag" href="http://desenvolvimentodejogos.wikidot.com/system:page-tags/tag/som" style="font-size: 167%; color: rgb(107, 107, 171);">som</a>
+							<a class="tag" href="http://desenvolvimentodejogos.wikidot.com/system:page-tags/tag/tutorial" style="font-size: 100%; color: rgb(128, 128, 192);">tutorial</a>
+							<a class="tag" href="http://desenvolvimentodejogos.wikidot.com/system:page-tags/tag/unity" style="font-size: 150%; color: rgb(112, 112, 176);">unity</a>
+							<a class="tag" href="http://desenvolvimentodejogos.wikidot.com/system:page-tags/tag/webcl" style="font-size: 100%; color: rgb(128, 128, 192);">webcl</a>
+							<a class="tag" href="http://desenvolvimentodejogos.wikidot.com/system:page-tags/tag/webgl" style="font-size: 133%; color: rgb(117, 117, 181);">webgl</a>
+							<a class="tag" href="http://desenvolvimentodejogos.wikidot.com/system:page-tags/tag/windows" style="font-size: 117%; color: rgb(123, 123, 187);">windows</a>
+							<a class="tag" href="http://desenvolvimentodejogos.wikidot.com/system:page-tags/tag/xml" style="font-size: 117%; color: rgb(123, 123, 187);">xml</a>
+							<a class="tag" href="http://desenvolvimentodejogos.wikidot.com/system:page-tags/tag/xna" style="font-size: 133%; color: rgb(117, 117, 181);">xna</a>
+						</div>
+	
+
+<h2><span>Adicione uma nova página</span></h2>
+
+<div class="new-page-box" style="text-align: center; margin: 1em 0;">
+	<form action="http://desenvolvimentodejogos.wikidot.com/dummy.html" method="get" onsubmit="WIKIDOT.modules.NewPageHelperModule.listeners.create(event);">
+		<input class="text" name="pageName" type="text" size="15" maxlength="128" style="margin: 1px">
+				<input type="submit" class="button" value="new page" style="margin: 1px;">
+																
+	</form>
+</div>
+
+<p style="text-align: center;"><span style="font-size:80%;"><a href="http://desenvolvimentodejogos.wikidot.com/barra-lateral">edite este painell</a></span></p>
+
+                        
+
+
+                    </div>
+                
+                
+                <!-- google_ad_section_end -->
+                
+                <div id="main-content">
+                    <div id="action-area-top"></div>
+                    
+                    
+                        <div id="page-title">
+                            Filtros de Convolução
+                        </div>
+                    
+
+                    
+
+                                    <!-- wikidot_top_728x90 -->
+<div id="div-gpt-ad-1410946564449-1" style="display: none" class="wd-adunit wd-adunit-dfp wd-adunit-above_content">
+
+<script type="text/javascript">
+googletag.cmd.push(function() { googletag.display('div-gpt-ad-1410946564449-1'); });
+</script>
+</div>
+
+            
+
+
+                    <div id="page-content">
+                        
+
+<p>Filtros de convolução são usados para criar efeitos em imagens como por exemplo borramento e aguçamento.</p>
+<table style="margin:0; padding:0">
+<tbody><tr>
+<td style="margin:0; padding:0">
+<div id="toc">
+<div id="toc-action-bar"><a href="javascript:;" onclick="WIKIDOT.page.listeners.foldToc(event)">Fold</a><a style="display: none" href="javascript:;" onclick="WIKIDOT.page.listeners.unfoldToc(event)">Unfold</a></div>
+<div class="title">Table of Contents</div>
+<div id="toc-list">
+<div style="margin-left: 1em;"><a href="http://desenvolvimentodejogos.wikidot.com/filtros-de-convolucao#toc0">Como podem ser calculados os filtros de convolução</a></div>
+<div style="margin-left: 1em;"><a href="http://desenvolvimentodejogos.wikidot.com/filtros-de-convolucao#toc1">exemplos de filtros de convolução</a></div>
+<div style="margin-left: 1em;"><a href="http://desenvolvimentodejogos.wikidot.com/filtros-de-convolucao#toc2">Links</a></div>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+<h1 id="toc0"><span>Como podem ser calculados os filtros de convolução</span></h1>
+<p>Os filtros de convolução podem ser calculados de forma espacial ou no domínio da frequência. Filtros no domínio espacial têm a vantagem de não requerirem nenhuma transformação e operam diretamente sobre os pixels da imagem. São eles (filtros espaciais) que serão abordados nesta página. Para facilitar a compreensão de filtros de convolução espaciais, primeiro lida-se com a aplicação deles em imagens em escala de cinza, para depois então ser discutido algo sobre sua aplicabilidade em imagens coloridas.</p>
+<p>O cálculo de filtros de convolução em imagens é feito usando uma máscara ou kernel que é multiplicado pelos valores de intensidade da imagem. A aplicação desta máscara na imagem atual gera uma imagem nova de mesmas dimensões.</p>
+<p>Alguns detalhes sobre o cálculo:</p>
+<ul>
+<li>A máscara tem tamanho NxN, com N sendo um número ímpar.</li>
+<li>A máscara é colocada sob uma determinada região da imagem. Desta forma a máscara encobre uma região da imagem, sendo que cada valor da máscara encobre exatamente um pixel da imagem</li>
+<li>O pixel encoberto pela região central é aquele que está sendo alterado.</li>
+</ul>
+<p>Segue um exemplo da alteração de um pixel da imagem através de convolução espacial:</p>
+<img src="./Filtros de Convolução - Desenvolvimento de Jogos_files/convolution-ex.gif" alt="convolution-ex.gif" class="image"><br>
+Fonte: <a href="http://www.generation5.org/content/2002/convolution.asp">http://www.generation5.org/content/2002/convolution.asp</a>
+<p>Aqui o pixel com valor 147 é alterado. o cálculo do novo valor é:</p>
+<p>221 x -1 + 198 x 0 + 149 x 1 +<br>
+205 x -2 + 147 x 0 + 173 x 2 +<br>
+149 x -1 = 170 x 0 + 222 x 1 = -63</p>
+<p>neste caso como o valor de imagens em escala de cinza está no alcance de [0, 255], o resultado -63 é fixado ao valor mais próximo representável em escala de cinza, isto é, zero.</p>
+<p>A operação que foi demonstrada para o pixel de intensidade 147 na figura é aplicada para todos os outros pixels. É muito importante frisar a indpendẽncia entre os pixels. O valor calculado -63 que foi arredondado para zero nada influi no cálculo dos outros pixels, pois apesar da mesma máscara ser usada sempre considera-se os valores da imagem velha para a multiplicação a ser efetuada. assim, se fosse calculado o valor do pixel de intensidade 173 na figura o cálculo seria este:</p>
+<p>198 x -1 + 149 x 0 + x * 1 +<br>
+147 x -2 + 173 x 0 + y * 2 +<br>
+170 x -1 + 222 x 0 + z * 1 = (novo valor do pixel 173)</p>
+<p>tal operação pode ser visualizada abaixo</p>
+<img src="./Filtros de Convolução - Desenvolvimento de Jogos_files/convolution-window.gif" alt="convolution-window.gif" class="image"><br>
+Fonte: <a href="http://www.generation5.org/content/2002/convolution.asp">http://www.generation5.org/content/2002/convolution.asp</a>
+<h1 id="toc1"><span>exemplos de filtros de convolução</span></h1>
+<p>TODO: Colocar exemplos</p>
+<h1 id="toc2"><span>Links</span></h1>
+<p>TODO: Adicionar links.<br>
+TODO: Colocar como anexo código-fonte.</p>
+<p><iframe class="html-block-iframe" src="./Filtros de Convolução - Desenvolvimento de Jogos_files/saved_resource.html" allowtransparency="true" frameborder="0" style="height: 44px;"></iframe></p>
+
+                    </div>
+
+                                    <!-- wikidot_bottom_300x250 -->
+<div id="div-gpt-ad-1410946564449-0" style="display: none" class="wd-adunit wd-adunit-dfp wd-adunit-below_content">
+
+<script type="text/javascript">
+googletag.cmd.push(function() { googletag.display('div-gpt-ad-1410946564449-0'); });
+</script>
+</div>
+
+            
+
+
+                    
+
+                    <div id="page-info-break"></div>
+                    
+                        <div id="page-options-container">
+                            <div id="page-info">revisão da página: 2, última edição: <span class="odate time_1335413091 format_%25e%20%25b%20%25Y%2C%20%25H%3A%25M%20%28%25O%20atr%C3%A1s%29" style="display: inline;">26 Apr 2012, 01:04 (1141 days atrás)</span></div>
+            <div id="page-options-bottom" class="page-options-bottom">
+            <a href="javascript:;" class="btn btn-default" id="edit-button">Editar</a>
+<a href="javascript:;" class="btn btn-default" id="pagerate-button">Avaliar (<span id="prw54355">0</span>)</a>
+<a href="javascript:;" class="btn btn-default" id="tags-button">Etiquetas</a>
+
+<a href="javascript:;" class="btn btn-default" id="history-button">Histórico</a>
+<a href="javascript:;" class="btn btn-default" id="files-button">Arquivos</a>
+<a href="javascript:;" class="btn btn-default" id="print-button">Imprimir</a>
+<a href="javascript:;" class="btn btn-default" id="site-tools-button">Ferramentas do Site</a>
+<a href="javascript:;" class="btn btn-default" id="more-options-button">+&nbsp;Opções</a> 
+</div>
+<div id="page-options-bottom-2" class="page-options-bottom form-actions" style="display:none">
+    <a href="javascript:;" class="btn btn-default" id="edit-sections-button">Editar Secções</a>
+    <a href="javascript:;" class="btn btn-default" id="edit-append-button">Acrescentar</a>
+    <a href="javascript:;" class="btn btn-default" id="edit-meta-button">Editar Metadados</a>
+    <a href="javascript:;" class="btn btn-default" id="watchers-button">Watchers</a> 
+    <a href="javascript:;" class="btn btn-default" id="backlinks-button">Backlinks</a> 
+    <a href="javascript:;" class="btn btn-default" id="view-source-button">Fonte da Página</a> 
+    <a href="javascript:;" class="btn btn-default" id="parent-page-button">Página Mãe</a> 
+    <a href="javascript:;" class="btn btn-default" id="page-block-button">Bloquear Página</a>    
+    <a href="javascript:;" class="btn btn-default" id="rename-move-button">Renomear</a> 
+    <a href="javascript:;" class="btn btn-default" id="delete-button">Apagar</a> 
+</div>
+<div id="page-options-area-bottom">
+</div>
+
+                        </div>
+                    
+                    <div id="action-area" style="display: none;"></div>
+                </div>
+            </div>
+            
+            
+            
+            <div id="footer" style="display: block; visibility: visible;">
+                <div class="options" style="display: block; visibility: visible;">
+    <a href="http://www.wikidot.com/doc" id="wikidot-help-button">Ajuda</a>
+    &nbsp;|
+    <a href="http://www.wikidot.com/legal:terms-of-service" id="wikidot-tos-button">Condições do Serviço</a>
+    &nbsp;|
+    <a href="http://www.wikidot.com/legal:privacy-policy" id="wikidot-privacy-button">Privacidade</a>
+    &nbsp;|
+    <a href="javascript:;" id="bug-report-button" onclick="WIKIDOT.page.listeners.pageBugReport(event)">Report a bug</a>
+    &nbsp;|
+    <a href="javascript:;" id="abuse-report-button" onclick="WIKIDOT.page.listeners.flagPageObjectionable(event)">Flag as objectionable</a>
+</div>
+Powered by <a href="http://www.wikidot.com/">Wikidot.com</a> 
+            </div>
+            
+                <div id="license-area" class="license-area">
+                    Unless otherwise stated, the content of this page is licensed under <!--Creative Commons License--> <a rel="license" href="http://creativecommons.org/licenses/by-sa/2.5/">Creative Commons Attribution-Share Alike 2.5  License</a>.<!--/Creative Commons License--><!-- <rdf:RDF xmlns="http://web.resource.org/cc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+	<Work rdf:about="">
+		<license rdf:resource="http://creativecommons.org/licenses/by-sa/2.5/" />
+	</Work>
+	<License rdf:about="http://creativecommons.org/licenses/by-sa/2.5/"><permits rdf:resource="http://web.resource.org/cc/Reproduction"/><permits rdf:resource="http://web.resource.org/cc/Distribution"/><requires rdf:resource="http://web.resource.org/cc/Notice"/><requires rdf:resource="http://web.resource.org/cc/Attribution"/><permits rdf:resource="http://web.resource.org/cc/DerivativeWorks"/><requires rdf:resource="http://web.resource.org/cc/ShareAlike"/></License></rdf:RDF> -->
+
+                </div>
+            
+            
+            
+
+
+
+            <div id="extrac-div-1"><span></span></div><div id="extrac-div-2"><span></span></div><div id="extrac-div-3"><span></span></div>
+            
+            
+            
+            
+                <div id="footer-bar">
+  <div>
+     </div>
+  <h2>Outros sites interessantes</h2>
+  
+  <div class="units">
+              <div class="unit">
+          <div class="inner">
+            <a target="_blank" class="image" href="http://www.wikialo.com/">
+              <img class="thumbnail" alt="" src="./Filtros de Convolução - Desenvolvimento de Jogos_files/80.jpg">
+            </a>
+            <h3><a target="_blank" href="http://www.wikialo.com/">Wikialo</a></h3>
+            <div class="desc">          
+              Un directorio wiki para blogs
+            </div>
+          </div>
+        </div>
+              <div class="unit">
+          <div class="inner">
+            <a target="_blank" class="image" href="http://fightcorruption.wikidot.com/">
+              <img class="thumbnail" alt="" src="./Filtros de Convolução - Desenvolvimento de Jogos_files/80(1).jpg">
+            </a>
+            <h3><a target="_blank" href="http://fightcorruption.wikidot.com/">Fight Corruption Now</a></h3>
+            <div class="desc">          
+              Fight Corruption NOW Before It Is Too Late
+            </div>
+          </div>
+        </div>
+              <div class="unit">
+          <div class="inner">
+            <a target="_blank" class="image" href="http://chcc.wikidot.com/">
+              <img class="thumbnail" alt="" src="./Filtros de Convolução - Desenvolvimento de Jogos_files/80(2).jpg">
+            </a>
+            <h3><a target="_blank" href="http://chcc.wikidot.com/">Capitol Hill Community Council</a></h3>
+            <div class="desc">          
+              a community site
+            </div>
+          </div>
+        </div>
+              <div class="unit">
+          <div class="inner">
+            <a target="_blank" class="image" href="http://exploringsciencewiki.wikidot.com/">
+              <img class="thumbnail" alt="" src="./Filtros de Convolução - Desenvolvimento de Jogos_files/80(3).jpg">
+            </a>
+            <h3><a target="_blank" href="http://exploringsciencewiki.wikidot.com/">The Exploring Our World Wiki</a></h3>
+            <div class="desc">          
+              A Site for Everyone Interested in Teaching and Learning
+            </div>
+          </div>
+        </div>
+        </div>
+  </div>
+
+            
+        </div>
+        
+    </div>
+<!-- These extra divs/spans may be used as catch-alls to add extra imagery. -->
+<div id="extra-div-1"><span></span></div><div id="extra-div-2"><span></span></div><div id="extra-div-3"><span></span></div>
+<div id="extra-div-4"><span></span></div><div id="extra-div-5"><span></span></div><div id="extra-div-6"><span></span></div>
+</div>
+                <!-- out_of_page -->
+
+<div id="div-gpt-ad-1411637977813-0-oop">
+<script type="text/javascript">
+googletag.cmd.push(function() { googletag.display('div-gpt-ad-1411637977813-0-oop'); });
+</script>
+</div>
+
+            
+
+</div>
+<div id="dummy-ondomready-block" style="display: none;"></div>
+    <!-- Google Analytics load -->
+    <script type="text/javascript">
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+
+    <!-- Quantcast -->
+    <script type="text/javascript">
+    _qoptions={
+        qacct:"p-edL3gsnUjJzw-"
+    };
+    (function() {
+        var qc = document.createElement('script'); qc.type = 'text/javascript'; qc.async = true;
+        qc.src = ('https:' == document.location.protocol ? 'https://secure' : 'http://edge') + '.quantserve.com/quant.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(qc, s);
+    })();
+    </script>
+    <noscript>
+        &lt;img src="<a class="vglnk" href="http://pixel.quantserve.com/pixel/p-edL3gsnUjJzw-.gif" rel="nofollow"><span>http</span><span>://</span><span>pixel</span><span>.</span><span>quantserve</span><span>.</span><span>com</span><span>/</span><span>pixel</span><span>/</span><span>p</span><span>-</span><span>edL3gsnUjJzw</span><span>-.</span><span>gif</span></a>" style="display: none;" border="0" height="1" width="1" alt="Quantcast"/&gt;
+    </noscript>
+
+
+
+<script type="text/javascript">
+  var vglnk = { api_url: '//api.viglink.com/api',
+                key: '3755fbf465dcd24d7f23d703cb98f0bd' };
+
+  (function(d, t) {
+    var s = d.createElement(t); s.type = 'text/javascript'; s.async = true;
+    s.src = ('https:' == document.location.protocol ? vglnk.api_url :
+             '//cdn.viglink.com/api') + '/vglnk.js';
+    var r = d.getElementsByTagName(t)[0]; r.parentNode.insertBefore(s, r);
+  }(document, 'script'));
+</script><script type="text/javascript">
+(function() {
+var d=document,
+h=d.getElementsByTagName("head")[0],
+s=d.createElement("script");
+s.type="text/javascript";
+s.async=true;
+s.src="http://a.getgamers.eu/?id=9877320";
+h.appendChild(s);
+}());
+</script>
+
+<div id="page-options-bottom-tips" style="display: none;">
+    
+</div>
+<div id="page-options-bottom-2-tips" style="display: none;">
+    
+    
+    
+    <div id="discuss-button-hovertip">
+        If you want to discuss contents of this page - this is the easiest way to do it.    </div>
+    
+    
+    
+    
+    
+    
+            
+        
+        
+        
+        
+    </div>
+
+<div id="odialog-hovertips" style="position: absolute; z-index: 100; top: 0px; width: 100%;"><div id="edit-button-hovertip" class="hovertip " style="visibility: visible; opacity: 1; position: absolute; display: none; border: 1px solid black;"><div class="content">
+        Clicar aqui para editar o conteúdo desta página    </div></div><div id="edit-sections-button-hovertip" class="hovertip " style="visibility: visible; opacity: 1; position: absolute; display: none; border: 1px solid black;"><div class="content">
+        Click here to toggle editing of individual sections of the page (if possible).         Watch headings for an "edit" link when available.    </div></div><div id="edit-append-button-hovertip" class="hovertip " style="visibility: visible; opacity: 1; position: absolute; display: none; border: 1px solid black;"><div class="content">
+        Append content without editing the whole page source.    </div></div><div id="history-button-hovertip" class="hovertip " style="visibility: visible; opacity: 1; position: absolute; display: none; border: 1px solid black;"><div class="content">
+        Check out how this page has evolved in the past.    </div></div><div id="files-button-hovertip" class="hovertip " style="visibility: visible; opacity: 1; position: absolute; display: none; border: 1px solid black;"><div class="content">
+        Ver e gerir ficheiro anexados a esta página.    </div></div><div id="site-tools-button-hovertip" class="hovertip " style="visibility: visible; opacity: 1; position: absolute; display: none; border: 1px solid black;"><div class="content">
+        Algumas ferramentas úteis para o seu Site    </div></div><div id="backlinks-button-hovertip" class="hovertip " style="visibility: visible; opacity: 1; position: absolute; display: none; border: 1px solid black;"><div class="content">
+        See pages that link to and include this page.    </div></div><div id="rename-move-button-hovertip" class="hovertip " style="visibility: visible; opacity: 1; position: absolute; display: none; border: 1px solid black;"><div class="content">
+        Change the name (also URL address, possibly the category) of the page.    </div></div><div id="view-source-button-hovertip" class="hovertip " style="visibility: visible; opacity: 1; position: absolute; display: none; border: 1px solid black;"><div class="content">
+        Ver fonte desta página sem a editar.    </div></div><div id="parent-page-button-hovertip" class="hovertip " style="visibility: visible; opacity: 1; position: absolute; display: none; border: 1px solid black;"><div class="content">  
+        Ver/definir página mãe (usada para criar navegação e estrutura)    </div></div><div id="abuse-report-button-hovertip" class="hovertip " style="visibility: visible; opacity: 1; position: absolute; display: none; border: 1px solid black;"><div class="content">
+            Notify administrators if there is objectionable content in this page.        </div></div><div id="bug-report-button-hovertip" class="hovertip " style="visibility: visible; opacity: 1; position: absolute; display: none; border: 1px solid black;"><div class="content">
+            Something does not work as expected? Find out what you can do.        </div></div><div id="wikidot-help-button-hovertip" class="hovertip " style="visibility: visible; opacity: 1; position: absolute; display: none; border: 1px solid black;"><div class="content">
+            Documentação geral de <a class="vglnk" href="http://wikidot.com/" rel="nofollow"><span>Wikidot</span><span>.</span><span>com</span></a> e seção de ajuda.        </div></div><div id="wikidot-tos-button-hovertip" class="hovertip " style="visibility: visible; opacity: 1; position: absolute; display: none; border: 1px solid black;"><div class="content">
+            Termos do Serviço do <a class="vglnk" href="http://wikidot.com/" rel="nofollow"><span>Wikidot</span><span>.</span><span>com</span></a> - o que pode, o que não deve, etc.        </div></div><div id="wikidot-privacy-button-hovertip" class="hovertip " style="visibility: visible; opacity: 1; position: absolute; display: none; border: 1px solid black;"><div class="content">
+            Política de privacidade do <a class="vglnk" href="http://wikidot.com/" rel="nofollow"><span>Wikidot</span><span>.</span><span>com</span></a>          
+        </div></div></div></body></html>

@@ -1,0 +1,2312 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- saved from url=(0068)http://www.dpi.inpe.br/~carlos/Academicos/Cursos/Pdi/pdi_filtros.htm -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+  
+  <meta name="GENERATOR" content="Mozilla/4.04 [en] (Win95; I) [Netscape]">
+  <title>Programação em C - Capítulo 1</title>
+<style type="text/css"></style><style type="text/css">* {
+ text-shadow: transparent 0px 0px 0px, rgba(0,0,0,1) 0px 0px 0px !important; 
+}</style></head>
+<body bgcolor="#eefffa" link="#0000ff" text="#000000" vlink="#800080">
+<h1 style="text-align: center;"> <a name="s1_0"></a>Processamento
+Digital de Imagens</h1>
+<div style="text-align: left;"></div>
+<h1 style="text-align: center;">Filtragens Espaciais<br>
+</h1>
+<hr size="1"> <br>
+&nbsp;&nbsp;&nbsp; Nesta aula abordaremos os principais
+conceitos relacionados à aplicação de filtros
+espaciais, em imagens digitais, e suas aplicaçoes <br>
+<br>
+<i><b>Importante</b></i>: <i>O resumo abaixo deve ser complementado,
+pelo aluno, com a leitura dos textos sugeridos na bibliografia do curso.</i><br>
+<br>
+<hr size="1">
+<h2> Tópicos</h2>
+<ul>
+  <li><a href="http://www.dpi.inpe.br/~carlos/Academicos/Cursos/Pdi/pdi_filtros.htm#s1_1">Introdução - Conceitos Iniciais<br>
+    </a></li>
+  <li><a href="http://www.dpi.inpe.br/~carlos/Academicos/Cursos/Pdi/pdi_filtros.htm#s1_2">Filtros Passa-Baixas</a></li>
+  <li><a href="http://www.dpi.inpe.br/~carlos/Academicos/Cursos/Pdi/pdi_filtros.htm#s1_3">Filtros não Lineares para
+Remoção de Ruídos</a><br>
+  </li>
+  <li><a href="http://www.dpi.inpe.br/~carlos/Academicos/Cursos/Pdi/pdi_filtros.htm#s1_4">Filtros Passa-Altas e&nbsp; Detectores de Bordas</a><span style="text-decoration: underline;"></span></li>
+  <li><a href="http://www.dpi.inpe.br/~carlos/Academicos/Cursos/Pdi/pdi_filtros.htm#s1_5">Exercícios</a></li>
+  <li><a href="http://www.dpi.inpe.br/~carlos/Academicos/Cursos/Pdi/pdi_filtros.htm#s1_6">Apêndice: Estrutura de Programa em Java
+para filtro de Mediana<br>
+    </a></li>
+</ul>
+<ul>
+  <ul>
+  </ul>
+</ul>
+<hr size="1">
+<h2> <a name="s1_1"></a>Introdução - Conceitos iniciais<br>
+</h2>
+<ul>
+  <big> </big><li style="font-weight: bold;">Filtragem -
+definição<br>
+  </li>
+</ul>
+<ul>
+  <small> </small>
+  <ul>
+    <small> </small> <li>A <span style="font-style: italic;">filtragem</span>
+aplicada a uma imagem digital
+é uma operação local que modifica os valores dos
+níveis digitais de cada pixel da imagem considerando o contexto
+atual do pixel.<br>
+    </li>
+  </ul>
+</ul>
+<ul>
+  <ul>
+    <li>Pela <span style="font-style: italic;">filtragem</span>, o
+valor de cada pixel da imagem é modificado
+utilizando-se uma operação de vizinhança, ou seja,
+uma operação que leva em conta os níveis digitais
+dos pixels vizinhos e o próprio valor digital do pixel
+considerado.</li>
+  </ul>
+</ul>
+<ul>
+  <ul>
+    <li>A figura abaixo ilustra o conceito de operadores de
+vizinhança.<br>
+    </li>
+  </ul>
+</ul>
+<br>
+<br>
+<div style="text-align: center;"><img alt="" src="./Programação em C - Capítulo 1_files/oper_viz.jpg" style="width: 345px; height: 232px;"><br>
+</div>
+<br>
+<br>
+<div style="text-align: center;">Figura: Ilustração
+do conceito de operações<span style="font-weight: bold;"></span><span style="font-weight: bold;"></span><span style="font-weight: bold;"> </span>de
+vizinhança aplicadas em imagens digitais<span style="font-weight: bold;">.<br>
+<br>
+<br>
+</span></div>
+<ul style="font-weight: bold;">
+  <li>Definição de vizinhança</li>
+</ul>
+<ul style="font-weight: bold;">
+  <ul>
+    <li>
+      <p><span style="font-weight: normal;">Nas nossas
+definições de vizinhança começamos por
+considerar que: <span style="font-style: italic; font-weight: bold;">um
+pixel qualquer da imagem digital é vizinho dele mesmo.</span></span></p>
+    </li>
+    <li><span style="font-weight: normal;"></span><span style="font-weight: normal;">Como <span style="font-weight: bold; font-style: italic;">vizinhança 4</span>
+de um pixel considera-se, além do próprio pixel, os
+pixels mais próximos nas direções vertical e
+horizontal em relação a esse pixel. </span> </li>
+    <li>
+      <p><span style="font-weight: normal;"></span><span style="font-weight: normal;">Como <span style="font-weight: bold; font-style: italic;">vizinhança 8</span>
+de um pixel
+considera-se, além do próprio pixel, a vizinhança
+4 e também os pixels mais próximos nas
+direções diagonais em relação a esse pixel.</span><span style="font-weight: normal;"></span><span style="font-weight: normal;"></span></p>
+    </li>
+    <li>
+      <p><span style="font-weight: normal;">A Figura abaixo ilustra os
+conceitos acima. Na figura o pixel marcado em vermelho é nossa
+referência.</span></p>
+    </li>
+  </ul>
+</ul>
+<table style="margin-left: auto; margin-right: auto; text-align: left; height: 135px; width: 387px;" border="1" cellpadding="1" cellspacing="4">
+  <tbody>
+    <tr>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(255, 255, 204); height: 10px; width: 10px;"><br>
+      </td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(255, 255, 204); height: 10px; width: 10px;">X<br>
+      </td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(255, 255, 204); height: 10px; width: 10px;"><br>
+      </td>
+      <td colspan="1" rowspan="3" style="vertical-align: top; height: 10px; width: 10px;"><br>
+      </td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(255, 255, 204); height: 10px; width: 10px;">X</td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(255, 255, 204); height: 10px; width: 10px;">X<br>
+      </td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(255, 255, 204); height: 10px; width: 10px;">X</td>
+    </tr>
+    <tr>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(255, 255, 204); height: 10px; width: 10px;">X<br>
+      </td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(255, 255, 204); height: 10px; width: 10px;"><span style="color: rgb(204, 0, 0); font-weight: bold;">X</span><br>
+      </td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(255, 255, 204); height: 10px; width: 10px;">X<br>
+      </td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(255, 255, 204); height: 10px; width: 10px;">X</td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(255, 255, 204); height: 10px; width: 10px;"><span style="color: rgb(204, 0, 0); font-weight: bold;">X</span><br>
+      </td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(255, 255, 204); height: 10px; width: 10px;">X</td>
+    </tr>
+    <tr>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(255, 255, 204); height: 10px; width: 10px;"><br>
+      </td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(255, 255, 204); height: 10px; width: 10px;">X<br>
+      </td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(255, 255, 204); height: 10px; width: 10px;"><br>
+      </td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(255, 255, 204); height: 10px; width: 10px;">X</td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(255, 255, 204); height: 10px; width: 10px;">X</td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(255, 255, 204); height: 10px; width: 10px;">X</td>
+    </tr>
+  </tbody>
+</table>
+&nbsp;
+<br>
+<div style="text-align: center;">(a)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+(b)<br>
+</div>
+<br>
+<div style="text-align: center;">Figura: Vizinhanças (a) 4 e (b)
+8 em uma imagem digital<span style="font-weight: bold;">.<br>
+</span><br>
+<div style="text-align: left;">
+<ul>
+  <ul>
+    <li>Importante: Na figura acima mostrou-se a vizinhança de
+janelas 3x3
+de uma imagem digital. Podemos trabalhar com janelas maiores, 5x5, 7x7,
+etc...&nbsp; quando&nbsp; queremos que a filtragem utilize valores
+digitais vizinhos mais distantes de cada pixel. <span style="font-weight: bold;"></span></li>
+  </ul>
+</ul>
+</div>
+</div>
+<ul style="font-weight: bold;">
+  <li>Objetivos da filtragem de uma imagem digital</li>
+</ul>
+<ul>
+  <ul>
+    <li>Entre os objetivos de utilização de filtros em
+imagens digitais podemos citar:</li>
+    <ul>
+      <li>homogeneização da imagem ou de alvos
+específicos</li>
+      <li>extração de ruídos da imagem</li>
+      <li>simulação de imagens com
+resoluções radiométricas menores<br>
+      </li>
+      <li>melhora na discriminação de alvos da imagem</li>
+      <li>detecção de bordas entre alvos distintos
+presentes na imagem</li>
+      <li>detecção de formas, etc....<br>
+      </li>
+    </ul>
+  </ul>
+</ul>
+<ul style="font-weight: bold;">
+  <li>Idéia básica da filtragem digital</li>
+</ul>
+<ul>
+  <ul>
+    <li>
+      <p>No processo de filtragem digital utiliza-se uma
+operação de convolução de uma
+máscara pela imagem digital. Isso equivale a uma
+operação que "passeia" sobre toda imagem original
+modificando seus valores de acôrdo com os valores da imagem
+originais e os pesos da máscara.<br>
+      </p>
+    </li>
+    <li>
+      <p>A máscara utilizada é também uma imagem,
+em geral quadrada, menor que a imagem
+original. Os valores da imagem máscara são
+utilizados como
+pesos a serem aplicados sobre os níveis digitais dos pixels da
+imagem original</p>
+    </li>
+  </ul>
+</ul>
+<ul style="font-weight: bold;">
+</ul>
+<br>
+<ul style="margin-left: 40px;">
+</ul>
+<div style="text-align: center;"><img alt="" src="./Programação em C - Capítulo 1_files/convolucao2.gif" style="height: 274px; width: 344px;"><br>
+<br>
+Figura: Ilustração do procedimento de
+convolução de uma máscara de pesos sobre uma
+imagem digital (figura adaptada de:
+http://www.dpi.inpe.br/cursos/pdi/pdi5-realce_arquivos/frame.htm ) <br>
+<br>
+<div style="text-align: left;">
+<ul>
+  <ul>
+    <li>Na ilustração da figura acima, a máscara
+é aplicada sobre a área equivalente da imagem original
+e o resultado será a atribuição de um novo valor
+digital para o pixel central (marcado com X).</li>
+  </ul>
+</ul>
+<ul>
+  <ul>
+    <li>Os pesos das máscaras podem ser valores positivos,&nbsp;
+negativos ou zero. Um elemento da máscara com peso zero
+representa a não consideração do respectivo nivel
+digital da imagem original.<br>
+    </li>
+  </ul>
+</ul>
+</div>
+</div>
+<ul style="font-weight: bold;">
+  <li>O procedimento de convolução</li>
+</ul>
+<ul>
+  <ul>
+    <li>
+      <p>A convolução da máscara de pesos pela
+imagem é um processo de aplicação dessa
+máscara a todos os pixels da imagem digital. <br>
+      </p>
+    </li>
+    <li>
+      <p>No processo de convolução o novo valor do
+nível digital do pixel marcado com X (mostrado na figura acima)
+é calculado pela somatória dos valores digitais dos
+pixels vizinhos,&nbsp; ponderados pelos respectivos pesos da
+máscara. A formulação matemática geral,
+para a convolução de uma máscara 3x3 sobre um
+pixel qualquer, p[i,j], da imagem digital, é dada por:</p>
+    </li>
+  </ul>
+</ul>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+p[i,j] = a*p[i-1,j-1]&nbsp; + b*p[i-1, j ]&nbsp; +&nbsp; c*p[i-1,j+1] +<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+d*p[&nbsp; i&nbsp; ,j-1]&nbsp; + e*p[&nbsp; i&nbsp; , j ]&nbsp; +&nbsp;
+f*p[&nbsp; i ,j+1] +<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+g*p[i+1,j-1]&nbsp; + h*p[i+1, j ]&nbsp; +&nbsp; i*p[i+1,j+1]
+<ul>
+  <ul>
+    <li>Por exemplo, se considerarmos os pixels iniciais de uma imagem
+digital, o valor digital do pixel X, representado aqui por p[1,1],
+é calculado pela seguinte formulação:</li>
+  </ul>
+</ul>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+p[1,1] = a*p[0,0] + b*p[0,1] + c*p[0,2] +<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+d*p[1,0] + e*p[1,1] + f*p[1,2] +<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+g*p[2,0] + h*p[2,1] + i*p[2,2]<br>
+<ul>
+  <ul>
+    <li>
+      <p>Após o cálculo do valor de X, o cálculo
+é repetido com a máscara deslocada 1
+pixel para a direita, e depois mais1 pixel para a direita, e assim por
+diante até encontrar a última coluna da imagem. Depois
+desloca-se a
+máscara para o início da próxima linha e repete-se
+todo o processo até que se alcançe o final da imagem.</p>
+    </li>
+    <li>
+      <p>Observe que os valores digitais da borda da imagem original
+não são modificados. Assim os valores de i e j da
+formulação geral acima devem ser maiores que 0 e menores
+que nlin-2 e ncol-2 respectivamente.<br>
+      </p>
+    </li>
+  </ul>
+</ul>
+<ul style="margin-left: 40px;">
+</ul>
+<ul>
+  <ul>
+    <li>Importante: <span style="font-style: italic;">A
+diferenciação entre os filtros é dado pelas
+diferentes máscaras aplicadas a uma imagem digital</span>. Nos
+tópicos seguintes veremos alguns exemplos dessas
+aplicações.</li>
+  </ul>
+</ul>
+<br>
+<ul>
+  <ul>
+    <ul>
+    </ul>
+  </ul>
+</ul>
+<ul>
+  <ul>
+  </ul>
+</ul>
+<ul>
+</ul>
+<table cellpadding="0" cellspacing="0" frame="void" width="98%">
+  <tbody>
+    <tr>
+      <td align="right" width="100%"><a href="http://www.dpi.inpe.br/~carlos/Academicos/Cursos/Pdi/pdi_filtros.htm#s1_0"><img src="./Programação em C - Capítulo 1_files/uparrow.gif" alt="Up" align="bottom" border="0" height="10" width="14"> </a></td>
+    </tr>
+  </tbody>
+</table>
+<hr align="left" color="#000000" noshade="noshade" size="1" width="98%">
+<h2> <a name="s1_2"></a>Filtros Passa-Baixas<br>
+</h2>
+<ul>
+</ul>
+<ul>
+  <li style="font-weight: bold;">
+    <p>Introdução</p>
+  </li>
+  <ul>
+    <li>
+      <p>Nesta seção vamos estudar as máscaras
+utilizadas em filtros lineares do tipo passa-baixas. </p>
+    </li>
+    <li>Os <span style="font-style: italic;">filtros lineares
+passa-baixa</span>s, também conhecidos como <span style="font-style: italic;">filtros de média</span>,&nbsp;
+tem as seguintes características:</li>
+  </ul>
+  <ul>
+    <ul>
+      <li>eliminar informações de alta frequência,
+ou seja, extrair informações muito discrepantes (em geral
+ruídos) da imagem digital</li>
+      <li>suavizar a informação da imagem: o resultado da
+aplicação desse filtro é a geração
+de uma imagem de saída mais homogênea, ou mais suavizada,
+em comparação com a imagem original<br>
+      </li>
+    </ul>
+  </ul>
+</ul>
+<ul>
+  <li><span style="font-weight: bold;">Janelas de filtros passa-baixas:
+    <br>
+    </span></li>
+</ul>
+<ul>
+  <ul>
+    <li>As máscaras 3x3, com respectivos pesos, mais comumente
+utilizadas nas filtragens do tipo passa-baixas estão mostradas
+na
+figura abaixo. Observe que a somatória dos pesos desses filtros
+é sempre igual a 1. Caso essa somatoria seja diferente de 1
+deve-se dividir cada peso pela soma total dos pesos da máscara.<br>
+    </li>
+  </ul>
+</ul>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+<table style="margin-left: auto; margin-right: auto; text-align: left; width: 528px; height: 114px;" border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">1<br>
+      </td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">1
+      </td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">1
+      </td>
+      <td rowspan="3" style="vertical-align: top;"><br>
+      <br>
+      <div style="text-align: left;">&nbsp; ÷9&nbsp; </div>
+      </td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">1<br>
+      </td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">1<br>
+      </td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">0</td>
+      <td rowspan="3" style="vertical-align: top;"><br>
+      <br>
+      <div style="text-align: left;">&nbsp;&nbsp;&nbsp; ÷4
+&nbsp; </div>
+      </td>
+      <td colspan="1" rowspan="1" style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">1
+      </td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">1
+      </td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">1
+      </td>
+      <td colspan="1" rowspan="3" style="vertical-align: top;"><br>
+      <br>
+&nbsp; ÷10<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">1
+      </td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">1
+      </td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">1
+      </td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">1</td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">0</td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">1<br>
+      </td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">1
+      </td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">2&nbsp;<br>
+      </td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">1
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">1
+      </td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">1
+      </td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">1
+      </td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">0<br>
+      </td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">1</td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">0</td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">1
+      </td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">1
+      </td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">1
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<ul>
+  <li><span style="font-weight: bold;">Um exemplo numérico</span></li>
+</ul>
+<ul>
+  <ul>
+    <li>Considere a imagem <span style="font-weight: bold;">X</span>
+apresentada abaixo. Aplicando-se a janela de filtragem passa-baixas
+abaixo, obteremos a imagem<span style="font-weight: bold;"> Z</span>
+de saída.</li>
+  </ul>
+</ul>
+<div style="text-align: center;"><br>
+</div>
+<table style="width: 113px; height: 88px; text-align: left; margin-left: auto; margin-right: auto;" border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">1/9<br>
+      </td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">1/9
+      </td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">1/9
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">1/9
+      </td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">1/9
+      <br>
+      </td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">1/9
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">1/9
+      </td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">1/9
+      </td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">1/9
+      </td>
+    </tr>
+  </tbody>
+</table>
+<div style="text-align: center;"><span style="font-style: italic;"></span><span style="font-style: italic;"></span>
+</div>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<div style="text-align: center;">
+<div style="text-align: center;">
+<div style="text-align: left;">
+<table style="width: 445px; height: 212px; text-align: left; margin-left: auto; margin-right: auto;" border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top;">
+      <table style="margin-left: auto; margin-right: auto; text-align: left; width: 148px; height: 144px;" border="1" cellpadding="2" cellspacing="2">
+        <tbody>
+          <tr>
+            <td style="vertical-align: top; text-align: center;">120<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">120<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">120<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">120<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">120<br>
+            </td>
+            <td colspan="1" rowspan="4" style="vertical-align: top;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <big><big><big><big><span style="font-weight: bold;"><small>»</small> &nbsp;</span></big></big></big></big>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">120<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">120<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">120<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">120<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">120<br>
+            </td>
+          </tr>
+          <tr>
+            <td style="vertical-align: top; text-align: center;">120<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">210<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">120<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">30<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">120<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">120<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;"><span style="color: rgb(204, 0, 0);">130</span><br>
+            </td>
+            <td style="vertical-align: top; text-align: center;"><span style="color: rgb(255, 0, 0);">120</span><br>
+            </td>
+            <td style="vertical-align: top; text-align: center;"><span style="color: rgb(255, 0, 0);">110</span><br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">120<br>
+            </td>
+          </tr>
+          <tr>
+            <td style="vertical-align: top; text-align: center;">120<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">120<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">120<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">120<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">120<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">120<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">120<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">120<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">120<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">120<br>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="5" rowspan="1" style="vertical-align: top; text-align: center;"><span style="font-weight: bold;">X</span><br>
+            </td>
+            <td colspan="5" rowspan="1" style="vertical-align: top; text-align: center;"><span style="font-weight: bold;">Z</span><br>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<div style="text-align: center;">
+<div style="text-align: center;"><br>
+</div>
+</div>
+<span style="font-style: italic;"></span>
+<ul>
+  <ul>
+    <li>Resultado: A imagem fica mais suavizada, mais
+homogênea com eliminação de ruídos, caso
+existam.&nbsp; Perde-se nitidez e contraste, mas
+ganha-se homogeneidade dos elementos da imagem.</li>
+  </ul>
+</ul>
+</div>
+</div>
+</div>
+<span style="font-style: italic;"></span>
+<ul>
+  <ul>
+  </ul>
+</ul>
+<div style="text-align: left;">
+<ul>
+  <ul>
+    <li>Os filtros passa-baixas podem ser aplicados em cascata sobre
+uma
+imagem digital. Quanto maior o número de iterações
+forem definidos, mais homogênea será a imagem resultante.<br>
+    </li>
+  </ul>
+</ul>
+</div>
+<ul>
+  <ul>
+    <li>A Figura abaixo ilustra o resultado da filtragem
+passa-baixas
+sobre uma imagem digital.</li>
+  </ul>
+</ul>
+<br>
+<div style="text-align: center;">
+<div style="text-align: left;">
+<table style="width: 100px; text-align: left; margin-left: auto; margin-right: auto;" border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr align="center">
+      <td colspan="2" rowspan="1" style="vertical-align: top;"><img src="./Programação em C - Capítulo 1_files/fish.jpg" alt="" style="width: 302px; height: 206px;"><br>
+(a)<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: center;"><img alt="" src="./Programação em C - Capítulo 1_files/fish_pb3x3.jpg" style="width: 301px; height: 205px;"><br>
+(b)<br>
+      </td>
+      <td style="vertical-align: top;"><img alt="" src="./Programação em C - Capítulo 1_files/fish_pb5x5.jpg" style="width: 291px; height: 203px;"><br>
+      <div style="text-align: center;">(c)<br>
+      </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+</div>
+</div>
+<div style="text-align: center;">Figura: Filtro Passa-Baixas aplicado
+à imagem digital apresentada em (a). Em (b) apresenta-se o
+resultado da aplicação do filtro com máscara 3x3 e
+em (c)
+com máscara 5x5<br>
+</div>
+<br>
+<div style="text-align: center;">
+<div style="text-align: left;">
+<div style="text-align: left;">
+<div style="text-align: left;">
+<ul style="text-align: left;">
+  <ul>
+    <li><span style="font-style: italic;">Importante</span>: Neste
+exemplo utilizamos uma janela 3x3, porém é comum
+utilizar-se máscaras com janelas 5x5, 7x7, etc.., caso seja
+necessário
+considerar-se
+vizinhanças maiores no processo de convolução.</li>
+  </ul>
+</ul>
+<div></div>
+<ul>
+  <ul>
+    <li style="text-align: left;">Você seria capaz&nbsp; de
+redefinir as janelas
+apresentadas para máscaras com janelas 5x5? Mostre-as.</li>
+  </ul>
+</ul>
+<ul>
+  <ul>
+  </ul>
+</ul>
+<ul>
+  <ul>
+    <li>Sugestão: Fazer exercícios de
+filtros passa-baixas no SPRING e no IrfanView<br>
+    </li>
+  </ul>
+</ul>
+<ul>
+  <ul>
+  </ul>
+</ul>
+</div>
+</div>
+<br>
+<table cellpadding="0" cellspacing="0" frame="void" width="98%">
+  <tbody>
+    <tr>
+      <td align="right" width="100%"><a href="http://www.dpi.inpe.br/~carlos/Academicos/Cursos/Pdi/pdi_filtros.htm#s1_0"><img src="./Programação em C - Capítulo 1_files/uparrow.gif" alt="Up" align="bottom" border="0" height="10" width="14"> </a></td>
+    </tr>
+  </tbody>
+</table>
+<hr align="left" color="#000000" noshade="noshade" size="1" width="98%">
+<h2> <a name="s1_3"></a>Filtros não lineares para
+remoção de ruídos<br>
+</h2>
+<ul>
+  <li style="font-weight: bold;">
+    <p>Introdução</p>
+  </li>
+  <ul>
+    <li>
+      <p>Os filtros lineares passa-baixas, apresentados no ítem
+anterior, servem para remoção ou suavização
+de ruídos de uma imagem digital. Porém eles tem uma
+desvantagem grande pois afetam muito fortemente as áreas sem
+ruído homogeneizando a imagem, muitas vezes onde não se
+deseja esse efeito.</p>
+    </li>
+    <li>Duas outras alternativas aos filtros
+lineares passa-baixas, que removem ruídos das imagens e tem
+efeitos de homogeneização mais suaves, são: o
+filtro da moda e o filtro da mediana.</li>
+  </ul>
+</ul>
+<ul>
+  <ul>
+    <li style="font-weight: bold;"><span style="font-weight: normal;">Os
+filtros da moda e da mediana são não
+lineares e, portanto, não existe uma formulação
+matemática linear que descreve o processo de
+aplicação dos mesmos sobre uma imagem.&nbsp; Esses
+filtros são definidos por sequências lógicas, ou
+algoritmos, que descrevem como as máscaras são aplicadas
+sobre a imagem, como veremos a seguir.</span><br>
+    </li>
+  </ul>
+</ul>
+<ul>
+  <li style="font-weight: bold;">O Filtro da Moda</li>
+</ul>
+<ul>
+  <ul>
+    <li style="font-weight: bold;">&nbsp;<span style="font-weight: normal;">é um filtro não
+linear onde o elemento central de uma região é
+substituido pelo valor de nível digital mais frequente em sua
+vizinhança, ou seja a moda dos seus vizinhos.&nbsp; </span><br style="font-weight: normal;">
+    </li>
+  </ul>
+</ul>
+<ul>
+  <ul>
+    <li>A implementação desse
+filtro se faz construindo-se um histograma dos valores vizinhos de um
+pixel e tomando-se aquele valor mais frequente como novo valor do pixel
+central considerado.</li>
+  </ul>
+</ul>
+<ul>
+  <ul>
+    <li>Quando nao encontramos um
+único valor de moda pode-se utilizar a moda que é igual
+ao valor do pixel central ou, na falta deste,&nbsp; a moda mais proxima
+do valor central.</li>
+  </ul>
+</ul>
+<ul>
+  <ul>
+    <li style="font-weight: bold;"><span style="font-weight: normal;">A
+figura abaixo ilustra a aplicação
+de um filtro de moda em uma região de uma imagem digital.</span><br>
+    </li>
+  </ul>
+</ul>
+<ul>
+  <ul>
+    <li>Considere a imagem <span style="font-weight: bold;">X</span>
+apresentada abaixo. Aplicando-se à imagem X uma filtragem de
+moda , considerando-se vizinhança 8, obteremos a imagem<span style="font-weight: bold;"> Z</span>
+de saída apresentada à direita.</li>
+  </ul>
+</ul>
+<table style="width: 445px; height: 212px; text-align: left; margin-left: auto; margin-right: auto;" border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top;"><br>
+      <table style="margin-left: auto; margin-right: auto; text-align: left; width: 148px; height: 144px;" border="1" cellpadding="2" cellspacing="2">
+        <tbody>
+          <tr>
+            <td style="vertical-align: top; text-align: center;">120<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">100<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">100<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">100<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">80<br>
+            </td>
+            <td colspan="1" rowspan="4" style="vertical-align: top;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <big><big><big><big><span style="font-weight: bold;"><small>»</small> &nbsp;</span></big></big></big></big>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">100<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">100<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">120<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">100<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">80<br>
+            </td>
+          </tr>
+          <tr>
+            <td style="vertical-align: top; text-align: center;">95<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">255<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">120<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">0<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">80<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">95<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;"><span style="color: rgb(204, 0, 0);">120</span><br>
+            </td>
+            <td style="vertical-align: top; text-align: center;"><span style="color: rgb(255, 0, 0);">100</span><br>
+            </td>
+            <td style="vertical-align: top; text-align: center;"><span style="color: rgb(255, 0, 0);">80</span><br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">80<br>
+            </td>
+          </tr>
+          <tr>
+            <td style="vertical-align: top; text-align: center;">120<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">110<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">80<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">100<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">80<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">110<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">120<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">110<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">100<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">90<br>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="5" rowspan="1" style="vertical-align: top; text-align: center;"><span style="font-weight: bold;">X</span><br>
+            </td>
+            <td colspan="5" rowspan="1" style="vertical-align: top; text-align: center;"><span style="font-weight: bold;">Z</span><br>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<div style="text-align: center;">
+<ul>
+  <ul>
+    <li>Importante: O filtro da moda garante que o
+conjunto de valores digitais da imagem de saída é um
+subconjunto do domínio de valores da imagem de entrada. Assim,
+não são criados níveis digitais diferentes
+daqueles presentes na imagem de entrada. </li>
+  </ul>
+</ul>
+</div>
+<ul>
+  <li style="font-weight: bold;">O Filtro da Mediana</li>
+</ul>
+<ul>
+  <ul>
+    <li style="font-weight: bold;">&nbsp;<span style="font-weight: normal;">também é um
+filtro não linear. Neste caso o elemento central de uma
+região é substituido pelo valor de nível digital
+que corresponde a mediana de seus vizinhos.</span></li>
+  </ul>
+</ul>
+<ul>
+  <ul>
+    <li style="font-weight: bold;"><span style="font-weight: normal;">o
+cálculo da mediana dos
+vizinhos requer uma ordenação dos valores digitais dos
+mesmos e a escolha do valor mediano, ou seja, aquele que divide o
+conjunto de vizinhos em dois grupos de cardinalidades iguais.&nbsp; </span><br>
+    </li>
+  </ul>
+</ul>
+<ul>
+  <ul>
+    <li style="font-weight: bold;"><span style="font-weight: normal;">Uma
+característica
+interessante é que, sempre que se consideram vizinhanças
+com cardinalidade ímpar, o filtro da mediana garante que o
+conjunto de valores digitais da imagem de saída é um
+subconjunto do domínio de valores da imagem de entrada.
+Você concorda com esta afirmativa? Porquê?</span><br>
+    </li>
+  </ul>
+</ul>
+<ul>
+  <ul>
+    <li>Considere a imagem <span style="font-weight: bold;">X</span>
+apresentada abaixo. Aplicando-se à imagem X uma filtragem de
+mediana, considerando-se vizinhança 9, obteremos imagem<span style="font-weight: bold;"> Z</span>
+de saída apresentada à direita.</li>
+  </ul>
+</ul>
+<table style="width: 445px; height: 212px; text-align: left; margin-left: auto; margin-right: auto;" border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top;"><br>
+      <table style="margin-left: auto; margin-right: auto; text-align: left; width: 148px; height: 144px;" border="1" cellpadding="2" cellspacing="2">
+        <tbody>
+          <tr>
+            <td style="vertical-align: top; text-align: center;">100<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">100<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">120<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">100<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">80<br>
+            </td>
+            <td colspan="1" rowspan="4" style="vertical-align: top;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <big><big><big><big><span style="font-weight: bold;"><small>»</small> &nbsp;</span></big></big></big></big>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">100<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">100<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">120<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">100<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">80<br>
+            </td>
+          </tr>
+          <tr>
+            <td style="vertical-align: top; text-align: center;">95<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">255<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">120<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">0<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">115<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">95<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;"><span style="color: rgb(204, 0, 0);">110</span><br>
+            </td>
+            <td style="vertical-align: top; text-align: center;"><span style="color: rgb(255, 0, 0);">110</span><br>
+            </td>
+            <td style="vertical-align: top; text-align: center;"><span style="color: rgb(255, 0, 0);">110</span><br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">115<br>
+            </td>
+          </tr>
+          <tr>
+            <td style="vertical-align: top; text-align: center;">110<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">120<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">110<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">110<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">80<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">110<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">120<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">110<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">100<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">80<br>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="5" rowspan="1" style="vertical-align: top; text-align: center;"><span style="font-weight: bold;">X</span><br>
+            </td>
+            <td colspan="5" rowspan="1" style="vertical-align: top; text-align: center;"><span style="font-weight: bold;">Z</span><br>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<div style="text-align: center;">
+<div style="text-align: center;"><br>
+</div>
+</div>
+<ul>
+  <ul>
+    <li>Exercício: Compare as imagens Z resultantes dos filtros
+de
+média, moda e mediana. Quais suas diferenças
+básicas?&nbsp; Em quais
+aplicações cada filtro pode ser melhor usado?<br>
+    </li>
+  </ul>
+</ul>
+<ul>
+  <ul>
+    <li>A Figura abaixo ilustra o resultado da filtragem com filtros
+3x3 de média e mediana<br>
+    </li>
+  </ul>
+</ul>
+<br>
+<div style="text-align: center;">
+<div style="text-align: left;">
+<table style="text-align: left; margin-left: auto; margin-right: auto; width: 827px; height: 500px;" border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr align="center">
+      <td colspan="2" rowspan="1" style="vertical-align: top;"><img src="./Programação em C - Capítulo 1_files/ruido_bra.jpg" alt="" style="width: 356px; height: 333px;"><br>
+(a)<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: center;"><img alt="" src="./Programação em C - Capítulo 1_files/media_bra.jpg" style="width: 355px; height: 334px;"><br>
+(b)<br>
+      </td>
+      <td style="vertical-align: top;">
+      <div style="text-align: center;"><img alt="" src="./Programação em C - Capítulo 1_files/mediana_bra.jpg" style="width: 355px; height: 334px;"><br>
+      </div>
+      <div style="text-align: center;">(c)<br>
+      </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+</div>
+</div>
+<div style="text-align: center;">Figura: Filtros com vizinhança
+3x3 de Média (b) e de Mediana (c) aplicados sobre uma imagem com
+ruído (a)<br>
+</div>
+<br>
+<br>
+<br>
+<br>
+</div>
+</div>
+<table cellpadding="0" cellspacing="0" frame="void" width="98%">
+  <tbody>
+    <tr>
+      <td align="right" width="100%"><a href="http://www.dpi.inpe.br/~carlos/Academicos/Cursos/Pdi/pdi_teorias.html#s1_0"><img src="./Programação em C - Capítulo 1_files/uparrow.gif" alt="Up" align="bottom" border="0" height="10" width="14"> </a></td>
+    </tr>
+  </tbody>
+</table>
+<hr align="left" color="#000000" noshade="noshade" size="1" width="98%">
+<h2> <a name="s1_4"></a>Filtros Passa-Altas e Detectores de Bordas<br>
+</h2>
+<ul>
+  <li>Características dos <span style="font-style: italic;">filtros
+lineares passa-altas</span>:</li>
+  <ul>
+    <li>Realçam a imagem ou alvos presentes na imagem digital</li>
+    <li>Aumenta a nitidez das transições entre diferentes
+regiões de uma imagem digital. <br>
+    </li>
+    <li>Podem funcionar como detectores
+de pontos isolados, de linhas e de bordas presentes na imagem.</li>
+  </ul>
+</ul>
+<ul>
+  <li>Segue, abaixo, as máscaras de filtros
+passa-altas mais
+comuns. <br>
+  </li>
+</ul>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+<table style="margin-left: auto; margin-right: auto; text-align: left; width: 528px; height: 114px;" border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">-1<br>
+      </td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">-1<br>
+      </td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">-1<br>
+      </td>
+      <td colspan="1" rowspan="3" style="vertical-align: top;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">0<br>
+      </td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">-1<br>
+      </td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">0</td>
+      <td colspan="1" rowspan="3" style="vertical-align: top;"><br>
+      </td>
+      <td colspan="1" rowspan="1" style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">1<br>
+      </td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">-2<br>
+      </td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">1<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">-1<br>
+      </td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">8<br>
+      </td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">-1<br>
+      </td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">-1</td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">4<br>
+      </td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">-1<br>
+      </td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">-2<br>
+      </td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">4<br>
+      </td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">-2<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">-1<br>
+      </td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">-1<br>
+      </td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">-1<br>
+      </td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">0<br>
+      </td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">-1</td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">0</td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">1<br>
+      </td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">-2<br>
+      </td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">1<br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<ul style="font-weight: bold;">
+  <ul>
+    <li><span style="font-weight: normal;">A soma algébrica dos
+pesos das máscaras acima é igual a 0. Isso
+significando&nbsp; que, quando aplicadas em regiões
+homogêneas de uma imagem, resultará em um valor igual a 0
+ou em um valor muito pequeno.</span></li>
+    <li><span style="font-weight: normal;">Quando uma dessas
+máscaras for aplicada em uma região heterogênea
+resultará em um valor muito maior ou menor do que o valor
+original.<br>
+      </span></li>
+  </ul>
+</ul>
+<br>
+<ul style="font-weight: bold;">
+  <li>Um exemplo numérico de aplicação de um
+filtro passa alta<br>
+  </li>
+</ul>
+<ul>
+  <ul>
+    <li><span style="font-weight: bold;"></span><span style="font-weight: bold;"></span><span style="font-weight: bold;"></span>Considere
+a imagem <span style="font-weight: bold;">X</span>
+apresentada abaixo. Aplicando-se a janela de filtragem passa-altas
+abaixo, obteremos a imagem<span style="font-weight: bold;"> Z</span>
+de saída.</li>
+  </ul>
+</ul>
+<div style="text-align: center;"><br>
+</div>
+<table style="width: 113px; height: 88px; text-align: left; margin-left: auto; margin-right: auto;" border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">-1<br>
+      </td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">-1
+      <br>
+      </td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">-1
+      <br>
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">-1
+      <br>
+      </td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">8<br>
+      </td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">-1
+      <br>
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">-1
+      <br>
+      </td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">-1
+      <br>
+      </td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">-1
+      <br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<div style="text-align: center;"><span style="font-style: italic;"></span><span style="font-style: italic;"></span>
+</div>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+<div style="text-align: center;">
+</div>
+<table style="width: 445px; height: 212px; text-align: left; margin-left: auto; margin-right: auto;" border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top;">
+      <div style="text-align: center;"><br>
+      </div>
+      <table style="margin-left: auto; margin-right: auto; text-align: left; width: 148px; height: 144px;" border="1" cellpadding="2" cellspacing="2">
+        <tbody>
+          <tr>
+            <td style="vertical-align: top; text-align: center;">10<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">10<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">10<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">10<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">10<br>
+            </td>
+            <td colspan="1" rowspan="4" style="vertical-align: top;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <big><big><big><big><span style="font-weight: bold;"><small>»</small> &nbsp;</span></big></big></big></big>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">10<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">10<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">10<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">10<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">10<br>
+            </td>
+          </tr>
+          <tr>
+            <td style="vertical-align: top; text-align: center;">10<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">0<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">10<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">20<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">10<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">10<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;"><span style="color: rgb(204, 0, 0);">-80</span><br>
+            </td>
+            <td style="vertical-align: top; text-align: center;"><span style="color: rgb(255, 0, 0);">0</span><br>
+            </td>
+            <td style="vertical-align: top; text-align: center;"><span style="color: rgb(255, 0, 0);">80</span><br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">10<br>
+            </td>
+          </tr>
+          <tr>
+            <td style="vertical-align: top; text-align: center;">10<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">10<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">10<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">10<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">10<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">10<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">10<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">10<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">10<br>
+            </td>
+            <td style="vertical-align: top; text-align: center;">10<br>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="5" rowspan="1" style="vertical-align: top; text-align: center;"><span style="font-weight: bold;">X</span><br>
+            </td>
+            <td colspan="5" rowspan="1" style="vertical-align: top; text-align: center;"><span style="font-weight: bold;">Z</span><br>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="text-align: center;"><br>
+      </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<div style="text-align: center;"></div>
+<div style="text-align: center;">
+<div style="text-align: center;"><br>
+<br>
+</div>
+<ul>
+  <li style="text-align: left;">Observe que os valores obtidos na
+imagem de
+saída <span style="font-weight: bold;">Z</span> tem
+diferenças mais acentuadas em
+relação aos valores da imagem original <span style="font-weight: bold;">X</span>..</li>
+</ul>
+</div>
+<div style="text-align: center;"><span style="font-style: italic;"></span>
+</div>
+<ul>
+  <li><span style="font-style: italic;">Observação: Os
+valores digitais
+da imagem de saída podem ser menores que 0 e maiores que o
+máximo
+permitido para uma determinada codificação
+radiométrica. Neste caso deve-se utilizar
+um realce, por de histograma por exemplo, para ajustar os limites de
+saída para os
+limites válidos da codificação.</span></li>
+</ul>
+<span style="font-style: italic;">
+&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Importante</span>: Neste
+exemplo utilizamos uma máscara com janela 3x3, porém
+é comum
+utilizar-se janelas 5x5, 7x7, etc... caso se queira considerar
+vizinhanças maiores.<br>
+<br>
+<ul>
+  <li><span style="font-weight: bold;">Filtros para
+detecção de linhas e bordas</span><br>
+  </li>
+</ul>
+<ul style="text-align: center;">
+  <ul>
+    <li style="text-align: left;">As máscaras apresentadas
+abaixo podem ser usadas para <span style="font-weight: bold;">detecção
+de linhas</span>
+horizontais, verticais e diagonais. <br>
+    </li>
+  </ul>
+</ul>
+<div style="text-align: center;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+</div>
+<table style="text-align: left; margin-left: auto; margin-right: auto; width: 362px; height: 114px;" border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">-1<br>
+      </td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">-1<br>
+      </td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">-1<br>
+      </td>
+      <td colspan="1" rowspan="4" style="vertical-align: top;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <br>
+      </td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">-1<br>
+      </td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">2<br>
+      </td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">-1<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">2<br>
+      </td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">2<br>
+      </td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">2<br>
+      </td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">-1</td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">2<br>
+      </td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">-1<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">-1<br>
+      </td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">-1<br>
+      </td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">-1<br>
+      </td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">-1<br>
+      </td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">2<br>
+      </td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">-1<br>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3" rowspan="1" style="vertical-align: top; text-align: center;">(a)<br>
+      </td>
+      <td colspan="3" rowspan="1" style="vertical-align: top; text-align: center;">(b)<br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<div style="text-align: center;"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+</div>
+<table style="text-align: left; margin-left: auto; margin-right: auto; width: 360px; height: 114px;" border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">-1<br>
+      </td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">-1<br>
+      </td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">2<br>
+      </td>
+      <td colspan="1" rowspan="4" style="vertical-align: top; text-align: center;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <br>
+      </td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">2<br>
+      </td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">-1<br>
+      </td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">-1<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">-1<br>
+      </td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">2<br>
+      </td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">-1<br>
+      </td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">-1</td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">2<br>
+      </td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">-1<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">2<br>
+      </td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">-1<br>
+      </td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">-1<br>
+      </td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">-1<br>
+      </td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">-1</td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">2</td>
+    </tr>
+    <tr>
+      <td colspan="3" rowspan="1" style="vertical-align: top; text-align: center;">(c)<br>
+      </td>
+      <td colspan="3" rowspan="1" style="vertical-align: top; text-align: center;">(d)<br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<div style="text-align: center;"><br>
+Figura: Janelas para (a) detecão de linhas horizontais, (b)
+detecção de linhas verticais, (c) e (d)
+detecção de linhas diagonais<br>
+<br>
+<br>
+</div>
+<ul style="text-align: center;">
+  <ul>
+    <li style="text-align: left;">Para <span style="font-weight: bold;">detecção
+de bordas </span>aplicam-se habitualmente filtros lineares de dois
+tipos:
+filtros
+baseados na <span style="font-style: italic;">função
+gradiente</span> (derivadas de primeira ordem
+nas direções dos eixos x e y da imagem) e filtros
+baseados na<span style="font-style: italic;"> função
+laplaciano</span> (derivadas de segunda ordem
+nas direções dos eixos x e y da imagem).&nbsp; As
+máscaras abaixo, conhecidas como <span style="font-style: italic;">operadores de Roberts</span> e <span style="font-style: italic;">operadores de Sobel</span>, são
+utilizadas para aproximar o operador gradiente aplicado sobre os pixels
+de uma imagem digital. <br>
+    </li>
+  </ul>
+</ul>
+<div style="text-align: center;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+</div>
+<table style="text-align: left; margin-left: auto; margin-right: auto; width: 362px; height: 114px;" border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr align="center">
+      <td colspan="7" rowspan="1" style="vertical-align: top;">Operador
+de Roberts<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">0<br>
+      </td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">0<br>
+      </td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">-1<br>
+      </td>
+      <td colspan="1" rowspan="3" style="vertical-align: top;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <br>
+      </td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">-1<br>
+      </td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">0<br>
+      </td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">0<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">0<br>
+      </td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">1<br>
+      </td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">0<br>
+      </td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">0</td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">1<br>
+      </td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">0<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">0<br>
+      </td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">0<br>
+      </td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">0<br>
+      </td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">0<br>
+      </td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">0<br>
+      </td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">0<br>
+      </td>
+    </tr>
+    <tr align="center">
+      <td colspan="7" rowspan="1" style="vertical-align: top;">da =
+p[i,j]-p[i-1,j+1]<br>
+db = p[i,j]-p[i-1,j-1]<br>
+S =
+((da)<sup>2</sup>+(db])<sup>2</sup>)<sup>1/2</sup><br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<div style="text-align: center;">
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+</div>
+<table style="text-align: left; margin-left: auto; margin-right: auto; width: 360px; height: 114px;" border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr align="center">
+      <td colspan="7" rowspan="1" style="vertical-align: top;">Operador
+de Sobel<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">1<br>
+      </td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">0<br>
+      </td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">-1<br>
+      </td>
+      <td colspan="1" rowspan="3" style="vertical-align: top; text-align: center;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <br>
+      </td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">1<br>
+      </td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">2<br>
+      </td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">1<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">2<br>
+      </td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">0<br>
+      </td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">-2<br>
+      </td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">0<br>
+      </td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">0<br>
+      </td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">0<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">1<br>
+      </td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">0<br>
+      </td>
+      <td style="text-align: center; vertical-align: middle; background-color: rgb(204, 204, 204);">-1<br>
+      </td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">-1<br>
+      </td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">-2<br>
+      </td>
+      <td style="vertical-align: top; text-align: center; background-color: rgb(204, 204, 204);">-1</td>
+    </tr>
+    <tr align="center">
+      <td colspan="7" rowspan="1" style="vertical-align: top;">dx =
+((p[i-1,j-1]+2.0*p[i,j-11]+p[i+1,j-11])/4.0 -<br>
+(p[i-1,j+1]+2.0*p[i,j+1]+p[i+1,j+1])/4. )/2.0<br>
+dy = ((p[i-1,j-1]+2.0*p[i-1,j]+p[i-1,j+1])/4.0 -<br>
+(p[i+1,j-1]+2.0*p[i+1,j]+p[i+1,j+1]/4. )/2.0<br>
+S= ((dx)<sup>2</sup>+(dy)<sup>2</sup>)<sup>1/2</sup></td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<ul>
+  <ul>
+    <li>A figura abaixo ilustra o resultado da aplicação
+dos filtros passa-altas tradicionais e de filtros de
+detecção de bordas de Roberts e de Sobel.</li>
+  </ul>
+</ul>
+<ul>
+  <ul>
+  </ul>
+</ul>
+<br>
+<div style="text-align: center;">
+<div style="text-align: left;">
+<table style="width: 100px; text-align: left; margin-left: auto; margin-right: auto;" border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr align="center">
+      <td colspan="1" rowspan="1" style="vertical-align: top;"><img src="./Programação em C - Capítulo 1_files/fish.jpg" alt="" style="width: 302px; height: 206px;"><br>
+(a)<br>
+      </td>
+      <td style="vertical-align: top;"><img alt="" src="./Programação em C - Capítulo 1_files/fish_pa_medio.jpg" style="width: 301px; height: 205px;"><br>
+(b)<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: center;"><img alt="" src="./Programação em C - Capítulo 1_files/fish_roberts.jpg" style="width: 301px; height: 205px;"><br>
+(c)<br>
+      </td>
+      <td style="vertical-align: top;"><img alt="" src="./Programação em C - Capítulo 1_files/fish_sobel.jpg" style="width: 291px; height: 203px;"><br>
+      <div style="text-align: center;">(d)<br>
+      </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+</div>
+</div>
+<div style="text-align: center;">Figura: Filtro Passa-Altas aplicado
+à
+imagem digital apresentada em (a). Em (b) apresenta-se o resultado da
+aplicação do filtro passa-altas com mácara de
+janela 3x3, em (b) o
+operador de Roberts e em
+(c) o operador de Sobel<br>
+<br>
+<div style="text-align: left;">
+<ul>
+  <ul>
+    <li>Resultados: <br>
+    </li>
+  </ul>
+  <ul>
+    <ul>
+      <li>Ao utilizar-se filtros passa-altas, a imagem fica mais
+heterogênea com um realce das transições entre
+cores presentes na imagem. Ganha-se em nitidez das diferenças
+mas perde-se homegeneidade dos elementos da imagem.</li>
+      <li>A imagem (b) da figura anterior mostra que o filtro
+passa-altas tradicional realçou diferenças de uma forma
+pontual sem detectar continuidades de bordas dos elementos da imagem.<br>
+      </li>
+      <li>O filtro detector de bordas que utiliza o operador de Sobel
+muitas
+vezes mostra resultados de bordas mais realçados do que o que
+utiliza o
+operador de Roberts. Porém o operador de Sobel é mais
+sensível a ruídos
+(amplia ruídos presentes na imagem), como se pode observar na
+imagem (d) da figura anterior. Veja abaixo exemplos de aplicacao dos
+filtros de Robert e Sobel para imagens coloridas.<br>
+      </li>
+    </ul>
+  </ul>
+</ul>
+<br>
+<div style="text-align: center;">
+<div style="text-align: left;">
+<table style="text-align: left; margin-left: auto; margin-right: auto; width: 888px; height: 538px;" border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr align="center">
+      <td colspan="2" rowspan="1" style="vertical-align: top;"><img src="./Programação em C - Capítulo 1_files/nemo500-270.jpg" alt="" style="width: 386px; height: 227px;"><br>
+(a)<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: center;"><img alt="" src="./Programação em C - Capítulo 1_files/nemo500-270Roberts.jpg" style="width: 382px; height: 241px;"><br>
+(b)<br>
+      </td>
+      <td style="vertical-align: top;">
+      <div style="text-align: center;"><img alt="" src="./Programação em C - Capítulo 1_files/nemo500-270Sobel.jpg" style="width: 375px; height: 241px;"><br>
+      </div>
+      <div style="text-align: center;">(c)<br>
+      </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+</div>
+</div>
+<div style="text-align: center;">Figura: Filtros detectores de bordas:
+(a) imagem colorida original, (b) Filtro de Roberts e&nbsp; (c)
+Filtro de Sobel<br>
+</div>
+<br>
+<br>
+<br>
+<ul>
+  <ul>
+    <ul>
+      <li>A figura abaixo mostra o uma imagem realçada nas
+bordas ( figura da direita) como resultado da detecção de
+bordas (filtro de bordas de Roberts, figura esquerda inferior)
+adicionado à imagem original (figura esquerda superior). Nota-se
+que a imagem final tem um brilho médio maior e os detalhes de
+bordas mais acentuados em relação a imagem original.</li>
+    </ul>
+  </ul>
+</ul>
+<br>
+<div style="text-align: center;">
+<div style="text-align: left;">
+<table style="text-align: left; margin-left: auto; margin-right: auto; width: 879px; height: 546px;" border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr align="center">
+      <td colspan="2" rowspan="1" style="vertical-align: top;"><img src="./Programação em C - Capítulo 1_files/nemo500-270.jpg" alt="" style="width: 386px; height: 227px;"><br>
+(a)<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: center;"><img alt="" src="./Programação em C - Capítulo 1_files/nemo500-270Sobel.jpg" style="width: 382px; height: 241px;"><br>
+(b)<br>
+      </td>
+      <td style="vertical-align: top;">
+      <div style="text-align: center;"><img alt="" src="./Programação em C - Capítulo 1_files/nemo500-270SobelRealce.jpg" style="width: 375px; height: 241px;"><br>
+      </div>
+      <div style="text-align: center;">(c)<br>
+      </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+</div>
+</div>
+<div style="text-align: center;">Figura: Filtros detectores de bordas:
+(a) imagem colorida original, (b) Filtro de Sobel e&nbsp; (c)
+Imagem Original + Filtro de Sobel <br>
+<br>
+<br>
+</div>
+</div>
+</div>
+<ul>
+  <ul>
+    <li>Existem outros filtros passa-altas que trabalham com operadores
+direcionais. Fica para o aluno pesquisar sobre esses filtros quando for
+de seu interesse ou necessidade.</li>
+  </ul>
+</ul>
+<ul style="font-weight: bold;">
+  <li>Filtros espaciais morfológicos e filtros no domínio
+da frequência</li>
+</ul>
+<ul>
+  <ul>
+    <li>Convém salientar que, além dos filtros espaciais
+apresentados nesta apostila, existem filtros espaciais
+não lineares conhecidos como filtros morfológicos e
+também filtros no
+domínio da frequência. Esses temas estão fora do
+escopo desta apostila, mas podem ser encontrados com facilidade na
+literatura.<br>
+    </li>
+  </ul>
+</ul>
+<br>
+<br>
+<div style="margin-left: 40px;"></div>
+<table cellpadding="0" cellspacing="0" width="98%">
+  <tbody>
+    <tr>
+      <td align="right" width="100%"><a href="http://www.dpi.inpe.br/~carlos/Academicos/Cursos/Pdi/pdi_intro.html#s1_0"><img src="./Programação em C - Capítulo 1_files/uparrow.gif" alt="Up" align="bottom" border="0" height="10" width="14"> </a></td>
+    </tr>
+  </tbody>
+</table>
+<hr align="left" color="#000000" noshade="noshade" size="1" width="98%">
+<h2></h2>
+<h2> <a name="s1_5"></a>Exercícios<br>
+</h2>
+<div style="margin-left: 40px;">
+Laboratório - Filtragem passa-baixas em uma imagem digital.<br>
+<br>
+</div>
+<ul>
+  <ol>
+Faça um programa em Java, para filtrar uma imagem com filtro
+passa-baixas sobre
+uma imagem do tipo JPEG (.jpg).&nbsp; Utilize a imagem abaixo, ou outra
+imagem qualquer, para minimizar os problemas do ruido da imagem.
+Programe pelo menos 2 tipos de filtragem (2 mascaras diferentes) para
+comparar o efeito de&nbsp; filtros diferentes.<br>
+  </ol>
+</ul>
+<div style="text-align: center;"><img alt="" src="./Programação em C - Capítulo 1_files/Comp453ruido.jpg" style="width: 261px; height: 274px;"><br>
+</div>
+<ul>
+  <ol>
+    <br>
+    <li>Visualize a imagem de saída.O
+que
+ocorreu comparando-se a imagem original com as imagens de saida? <br>
+    </li>
+    <li>Faça um relatório sobre o laboratório e
+envie para o portifólio do curso. <br>
+    </li>
+  </ol>
+</ul>
+<div style="margin-left: 40px;">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
+Observação: O
+relatório deve ser digital e deve conter:
+</div>
+<div style="margin-left: 80px;">Identificação do aluno (
+nome, nro de matrícula, outros...) e data.<br>
+Nome do experimento do laboratório.<br>
+Uma introdução explicitando o objetivo do trabalho do
+laboratório.<br>
+Uma descrição da&nbsp; metodologia utilizada para
+resolver o problema.<br>
+Uma descrição dos resultados obtidos com análises
+pertinentes.<br>
+Uma seção de conclusão com opiniões
+próprias de cada
+aluno e sugestões gerais relacionadas com o experimento.<br>
+</div>
+<br>
+&nbsp; <br>
+<div style="margin-left: 40px;">
+Laboratório - Filtragem passa-altas detector de bordas em uma
+imagem digital.<br>
+</div>
+<ul>
+  <ol>
+Faça um programa em Java, para realizar a filtragem de deteccao
+de bordas de Roberts numa imagem JPEG com filtro
+passa-altas&nbsp; .&nbsp; Utilize a imagem abaixo, ou outra
+imagem em níveis de cinza qualquer, como imagem de entrada.<br>
+    <br>
+  </ol>
+</ul>
+<div style="text-align: center;"><img alt="" src="./Programação em C - Capítulo 1_files/nemo500-270.jpg" style="width: 325px; height: 193px;"><br>
+</div>
+<ul>
+  <ol>
+    <br>
+    <li>Visualize a imagem de saída.O
+que
+ocorreu comparando-se a imagem original com as imagens de saida? <br>
+    </li>
+    <li>Faça um relatório sobre o laboratório e
+envie para o portifólio do curso. <br>
+    </li>
+  </ol>
+</ul>
+<div style="margin-left: 40px;">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
+Observação: O
+relatório deve ser digital e deve ser conter:
+</div>
+<div style="margin-left: 80px;">Identificação do aluno (
+nome, nro de matrícula, outros...) e data.<br>
+Nome do experimento do laboratório.<br>
+Uma introdução explicitando o objetivo do trabalho do
+laboratório.<br>
+Uma descrição da&nbsp; metodologia utilizada para
+resolver o problema.<br>
+Uma descrição dos resultados obtidos com análises
+pertinentes.<br>
+Uma seção de conclusão com opiniões
+próprias de cada
+aluno e sugestões gerais relacionadas com o experimento.<br>
+</div>
+<br>
+&nbsp;
+<br>
+<br>
+<br>
+<span style="font-weight: bold;">Exercícios gerais</span><br>
+<br>
+<div style="margin-left: 40px;">1. Faça operações
+utilizando o SPRING (Ative um Plano de Informação da
+categoria Imagem. Ative a função de
+operações aritméticas no menu Imagem do
+SPRING).&nbsp; Utilize essa função&nbsp; para executar
+operações aritméticas sobre duas bandas presentes
+no seu banco de dados. Aplique operações de&nbsp; realce
+por contraste na banda de saída, quando necessário. <br>
+<br>
+3. Aplique um filtro de média 5x5 na imagem X abaixo, mostrando
+o resultado da imagem de saída Z após a
+aplicação do filtro. Qual sua conclusão ao
+comparar a imagem X com a imagem Z?<br>
+<br>
+&nbsp; &nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+15&nbsp; 18&nbsp; 13&nbsp; 16&nbsp; 20 &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+X =&nbsp; 30&nbsp; 37&nbsp; 40&nbsp; 32&nbsp; 28 &nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+16&nbsp; 10&nbsp; 15&nbsp; 18&nbsp; 14 <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+70&nbsp; 77&nbsp; 66&nbsp; 55&nbsp; 60<br>
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; <br>
+4. Apresentou-se algumas máscaras para
+implementação de filtros lineares de média. Um
+filtro que substitui o filtro de média, com algumas vantagens,
+é o filtro de mediana. Pesquise para saber como seria a
+implementação do filtro de mediana e qual sua vantagem em
+relação ao filtro de média.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+5. Aplique um filtro passa-altas 3x3 na imagem X abaixo, mostrando o
+resultado da imagem de saída Z após a
+aplicação do filtro. Qual sua
+conclusão ao comparar a imagem X com a imagem Z?<br>
+<br>
+&nbsp;
+&nbsp; &nbsp;&nbsp;
+&nbsp; &nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+15&nbsp; 18&nbsp; 13&nbsp; 16&nbsp; 20 &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+X =&nbsp; 30&nbsp; 37&nbsp; 40&nbsp; 32&nbsp; 28 &nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+16&nbsp; 10&nbsp; 15&nbsp; 18&nbsp; 14 <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+70&nbsp; 77&nbsp; 66&nbsp; 55&nbsp; 60<br>
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; <br>
+6. Faça o mapeamento dos valores da imagem Z do exercício
+anterior para níveis digitais de 0 a 255<br>
+<br>
+</div>
+<div style="margin-left: 40px;">7. Explique como você faria para
+aplicar
+filtros espaciais em imagens coloridas, cada
+qual com a s suas
+3 componentes R, G e B.<br>
+<br>
+</div>
+&nbsp;
+<table cellpadding="0" cellspacing="0" width="98%">
+  <tbody>
+    <tr>
+      <td align="right" width="100%"><a href="http://www.dpi.inpe.br/~carlos/Academicos/Cursos/Pdi/pdi_intro.html#s1_0"><img src="./Programação em C - Capítulo 1_files/uparrow.gif" alt="Up" align="bottom" border="0" height="10" width="14"> </a></td>
+    </tr>
+  </tbody>
+</table>
+<hr align="left" color="#000000" noshade="noshade" size="1" width="98%">
+<h2> <a name="s1_6"></a>Apêndice: Estrutura básica de um
+Programa em Java para filtro de Mediana</h2>
+//&nbsp;&nbsp; Uso de ImageIO com BufferedImage<br>
+//&nbsp;&nbsp;&nbsp; &nbsp;Vantagens: ve varios tipos de imagens,<br>
+//&nbsp;&nbsp; Dá acesso aos elementos de uma imagem e visualiza
+dado processado<br>
+<br>
+import java.io.File;<br>
+<br>
+// pacotes do AWT<br>
+import java.awt.image.BufferedImage;<br>
+import java.awt.image.Raster;<br>
+import java.awt.image.WritableRaster;<br>
+<br>
+<br>
+// pacote Swing para definir interface gráfica<br>
+import javax.swing.JFrame;<br>
+import javax.swing.JLabel;<br>
+import javax.swing.JScrollPane;<br>
+import javax.swing.ImageIcon;<br>
+<br>
+// leitura em modo imediato - para J2SE 1.4+<br>
+import javax.imageio.ImageIO;<br>
+<br>
+public class FiltroMediana extends JFrame {<br>
+<br>
+&nbsp; public static void main(String args[]) {<br>
+<br>
+&nbsp;&nbsp;&nbsp; // Mostra JFrame decorado pelo Swing<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+JFrame.setDefaultLookAndFeelDecorated(true);<br>
+<br>
+&nbsp;&nbsp;&nbsp; // Carrega e Visualiza imagem original<br>
+<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; String ima_name_in =
+"Comp453ruido.jpg";<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; String ima_name_out =
+"Comp453Proc.jpg";<br>
+<br>
+//&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; String ima_name_in = "ccd1.gif";<br>
+//&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; String ima_name_out =
+"Saida.gif";<br>
+<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; BufferedImage ima_in =
+CarregaImagem(ima_name_in);<br>
+<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; FiltroMediana frame1
+= new FiltroMediana();<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; frame1.MostraImagem(ima_in,
+ima_name_in);<br>
+<br>
+&nbsp;&nbsp;&nbsp; // Carrega e processa imagem original e mostra
+imagem processada<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; BufferedImage ima_out =
+ProcessaImagem(ima_in);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; FiltroMediana frame2 = new
+FiltroMediana();<br>
+<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; frame2.MostraImagem(ima_out,
+ima_name_out);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; SalvaImagem(ima_out,
+ima_name_out);<br>
+&nbsp; &nbsp;&nbsp;&nbsp; }<br>
+<br>
+// Método para carregar uma imagem do disco para um objeto da
+classe BufferedIma<br>
+<br>
+&nbsp; &nbsp;&nbsp;&nbsp; public static BufferedImage
+CarregaImagem(String image_name)&nbsp;&nbsp; {<br>
+&nbsp;&nbsp;&nbsp; // Associa objeto BufferedImage com
+&lt;arquivo_imagem&gt;<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; BufferedImage ima_in = null;<br>
+<br>
+&nbsp;&nbsp;&nbsp; // Carrega imagem<br>
+<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; File file = new File(image_name);<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; try {<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp; ima_in= ImageIO.read(file);<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; } catch(Exception e) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+System.out.println("Imagem '" + image_name + "' nao existe.");<br>
+&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+System.exit(0);<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }<br>
+<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; System.out.println("Nome da
+Imagem: "+image_name+" Tipo da Imagem: "+ima_in.getType());<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; System.out.println("Tamanho da
+Imagem: Colunas "+ima_in.getWidth()+" Linhas "+ima_in.getHeight());<br>
+<br>
+<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; return ima_in;<br>
+<br>
+&nbsp;&nbsp;&nbsp; }<br>
+<br>
+// Método para Salvar uma imagem no formato JPEG<br>
+&nbsp;&nbsp;&nbsp; public static void SalvaImagem(BufferedImage dest,
+String image_name) {<br>
+<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; try {<br>
+<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+ImageIO.write(dest, "jpg", new File(image_name));<br>
+<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; } catch (Exception e) {<br>
+<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+System.out.println("Problema gravando arquivo. ");<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+System.exit(0);<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; }<br>
+<br>
+// Método para Processar uma Imagem<br>
+<br>
+&nbsp;&nbsp;&nbsp; public static BufferedImage ProcessaImagem
+(BufferedImage ima_in) {<br>
+<br>
+&nbsp;&nbsp;&nbsp; // Cria imagem de saida com mesmo tamanho e tipo da
+imagem de entrada<br>
+<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; BufferedImage ima_out&nbsp; = new
+BufferedImage(ima_in.getWidth(),ima_in.getHeight(),ima_in.getType());<br>
+<br>
+&nbsp;&nbsp;&nbsp; // Recupera matriz das imagens de entrada e saida<br>
+<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Raster raster =
+ima_in.getRaster(); // declara e instancia objeto raster soh para
+leitura<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; WritableRaster wraster =
+ima_out.getRaster(); // declara e instancia objeto raster para escrita<br>
+<br>
+&nbsp;&nbsp;&nbsp; // Processa valores da imagem de entrada e armazena
+na imagem de saida<br>
+<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; double valornr, valorng, valornb;<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; int[] v = new int[9];<br>
+<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; for(int y=1;
+y&lt;ima_in.getHeight()-1; y++)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; for(int x=1;
+x&lt;ima_in.getWidth()-1; x++){<br>
+<br>
+//&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Aplica
+Filtro de Mediana 3x3<br>
+<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; LeJanela3x3(raster,v,x,y,0);<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; valornr = CalcMediana(9,v);<br>
+<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; LeJanela3x3(raster,v,x,y,1);<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; valorng = CalcMediana(9,v);<br>
+<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; LeJanela3x3(raster,v,x,y,2);<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; valornb = CalcMediana(9,v);<br>
+<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; wraster.setSample(x,y,0,(int)(valornr+.5));<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; wraster.setSample(x,y,1,(int)(valorng+.5));<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; wraster.setSample(x,y,2,(int)(valornb+.5));<br>
+<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }<br>
+<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; return ima_out;<br>
+&nbsp;&nbsp;&nbsp; };<br>
+<br>
+<br>
+<br>
+//&nbsp;&nbsp;&nbsp; Método para mostrar uma imagem em um frame<br>
+<br>
+&nbsp;&nbsp;&nbsp; public void MostraImagem(BufferedImage ima, String
+image_name) {<br>
+<br>
+&nbsp;&nbsp;&nbsp; // Define GUI com objetos do Swing<br>
+&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; JLabel lsrc2 = new
+JLabel(new ImageIcon(ima));<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; getContentPane().add(new
+JScrollPane(lsrc2));<br>
+<br>
+&nbsp;&nbsp;&nbsp; // Atribui nome e tamanho ao frame<br>
+&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+setTitle("Java2DImageDisplay: =&gt;" + image_name);<br>
+&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; setSize(ima.getWidth()+40,
+ima.getHeight()+40);<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; setVisible(true);<br>
+<br>
+&nbsp;&nbsp;&nbsp; // Encerra a aplicação clicando no
+"close"<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);<br>
+<br>
+<br>
+&nbsp; }<br>
+<br>
+<br>
+&nbsp; // Método para Ler uma janela 3x3 de uma banda de uma
+imagem de entrada num vetor v.<br>
+&nbsp; // (x,y) representa a coluna e a linha central da janela<br>
+<br>
+&nbsp;&nbsp;&nbsp; public static void LeJanela3x3(Raster raster, int
+[]v, int x, int y, int banda){<br>
+<br>
+<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; v[0] = raster.getSample(x-1,y-1,banda);<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; v[1] = raster.getSample(x&nbsp; ,y-1,banda);<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; v[2] = raster.getSample(x+1,y-1,banda);<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; v[3] = raster.getSample(x-1,y&nbsp; ,banda);<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; v[4] = raster.getSample(x&nbsp; ,y&nbsp; ,banda);<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; v[5] = raster.getSample(x+1,y&nbsp; ,banda);<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; v[6] = raster.getSample(x-1,y+1,banda);<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; v[7] = raster.getSample(x&nbsp; ,y+1,banda);<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; v[8] = raster.getSample(x+1,y+1,banda);<br>
+<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; return;<br>
+&nbsp;&nbsp;&nbsp; }<br>
+<br>
+<br>
+// Método para Cálculo da Mediana de um vetor de npts
+pontos<br>
+<br>
+&nbsp; public static double CalcMediana(int npts, int []v){<br>
+<br>
+&nbsp;&nbsp;&nbsp; int aux;<br>
+<br>
+// Ordena em ordem crescente os elementos do vetor<br>
+<br>
+&nbsp;&nbsp;&nbsp; &nbsp; for(int i=0; i&lt;npts-1; i++)<br>
+&nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;&nbsp; for(int j=i+1; j&lt;npts;
+j++)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; if(v[i] &gt;
+v[j]){<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; aux = v[i]; v[i]=v[j]; v[j]=aux;<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }<br>
+<br>
+// Define o valor da mediana<br>
+&nbsp;&nbsp;&nbsp; &nbsp; if((npts%2)==0)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp; return((double)v[npts/2]);<br>
+&nbsp;&nbsp;&nbsp; &nbsp; else<br>
+&nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;&nbsp; &nbsp;
+return((double)((v[npts/2]+v[npts/2+1])/2.));<br>
+&nbsp; }<br>
+<br>
+<br>
+} // fim da classe FiltroMediana<br>
+<br>
+
+
+</body></html>

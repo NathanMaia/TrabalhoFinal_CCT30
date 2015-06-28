@@ -1,8 +1,20 @@
 /*
-** Copyright 2005 Huxtable.com. All rights reserved.
+Copyright 2006 Jerry Huxtable
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
 */
 
-package control;
+package com.jhlabs.image;
 
 import java.awt.*;
 import java.awt.image.*;
@@ -13,15 +25,40 @@ import java.awt.geom.*;
  * @author Jerry Huxtable
  */
 public class ConvolveFilter extends AbstractBufferedImageOp {
-
-	static final long serialVersionUID = 2239251672685254626L;
 	
+    /**
+     * Treat pixels off the edge as zero.
+     */
 	public static int ZERO_EDGES = 0;
+
+    /**
+     * Clamp pixels off the edge to the nearest edge.
+     */
 	public static int CLAMP_EDGES = 1;
+
+    /**
+     * Wrap pixels off the edge to the opposite edge.
+     */
 	public static int WRAP_EDGES = 2;
 
+    /**
+     * The convolution kernel.
+     */
 	protected Kernel kernel = null;
-	public boolean alpha = true;
+
+    /**
+     * Whether to convolve alpha.
+     */
+	protected boolean alpha = true;
+
+    /**
+     * Whether to promultiply the alpha before convolving.
+     */
+	protected boolean premultiplyAlpha = true;
+
+    /**
+     * What do do at the image edges.
+     */
 	private int edgeAction = CLAMP_EDGES;
 
 	/**
@@ -51,26 +88,82 @@ public class ConvolveFilter extends AbstractBufferedImageOp {
 	
 	/**
 	 * Construct a filter with the given 3x3 kernel.
-	 * @param matrix an array of 9 floats containing the kernel
+	 * @param kernel the convolution kernel
 	 */
 	public ConvolveFilter(Kernel kernel) {
 		this.kernel = kernel;	
 	}
 
+    /**
+     * Set the convolution kernel.
+     * @param kernel the kernel
+     * @see #getKernel
+     */
 	public void setKernel(Kernel kernel) {
 		this.kernel = kernel;
 	}
 
+    /**
+     * Get the convolution kernel.
+     * @return the kernel
+     * @see #setKernel
+     */
 	public Kernel getKernel() {
 		return kernel;
 	}
 
+    /**
+     * Set the action to perfomr for pixels off the image edges.
+     * @param edgeAction the action
+     * @see #getEdgeAction
+     */
 	public void setEdgeAction(int edgeAction) {
 		this.edgeAction = edgeAction;
 	}
 
+    /**
+     * Get the action to perfomr for pixels off the image edges.
+     * @return the action
+     * @see #setEdgeAction
+     */
 	public int getEdgeAction() {
 		return edgeAction;
+	}
+
+    /**
+     * Set whether to convolve the alpha channel.
+     * @param useAlpha true to convolve the alpha
+     * @see #getUseAlpha
+     */
+	public void setUseAlpha( boolean useAlpha ) {
+		this.alpha = useAlpha;
+	}
+
+    /**
+     * Get whether to convolve the alpha channel.
+     * @return true to convolve the alpha
+     * @see #setUseAlpha
+     */
+	public boolean getUseAlpha() {
+		return alpha;
+	}
+
+    /**
+     * Set whether to premultiply the alpha channel.
+     * @param premultiplyAlpha true to premultiply the alpha
+     * @see #getPremultiplyAlpha
+     */
+	public void setPremultiplyAlpha( boolean premultiplyAlpha ) {
+		this.premultiplyAlpha = premultiplyAlpha;
+	}
+
+    /**
+     * Get whether to premultiply the alpha channel.
+     * @return true to premultiply the alpha
+     * @see #setPremultiplyAlpha
+     */
+	public boolean getPremultiplyAlpha() {
+		return premultiplyAlpha;
 	}
 
     public BufferedImage filter( BufferedImage src, BufferedImage dst ) {
@@ -82,11 +175,15 @@ public class ConvolveFilter extends AbstractBufferedImageOp {
 
         int[] inPixels = new int[width*height];
         int[] outPixels = new int[width*height];
-        src.getRGB( 0, 0, width, height, inPixels, 0, width );
+        getRGB( src, 0, 0, width, height, inPixels );
 
-		convolve(kernel, inPixels, outPixels, width, height, alpha, edgeAction);		
+        if ( premultiplyAlpha )
+			ImageMath.premultiply( inPixels, 0, inPixels.length );
+		convolve(kernel, inPixels, outPixels, width, height, alpha, edgeAction);
+        if ( premultiplyAlpha )
+			ImageMath.unpremultiply( outPixels, 0, outPixels.length );
 
-        dst.setRGB( 0, 0, width, height, inPixels, 0, width );
+        setRGB( dst, 0, 0, width, height, outPixels );
         return dst;
     }
 
@@ -111,10 +208,29 @@ public class ConvolveFilter extends AbstractBufferedImageOp {
         return null;
     }
 
+    /**
+     * Convolve a block of pixels.
+     * @param kernel the kernel
+     * @param inPixels the input pixels
+     * @param outPixels the output pixels
+     * @param width the width
+     * @param height the height
+     * @param edgeAction what to do at the edges
+     */
 	public static void convolve(Kernel kernel, int[] inPixels, int[] outPixels, int width, int height, int edgeAction) {
 		convolve(kernel, inPixels, outPixels, width, height, true, edgeAction);
 	}
 	
+    /**
+     * Convolve a block of pixels.
+     * @param kernel the kernel
+     * @param inPixels the input pixels
+     * @param outPixels the output pixels
+     * @param width the width
+     * @param height the height
+     * @param alpha include alpha channel
+     * @param edgeAction what to do at the edges
+     */
 	public static void convolve(Kernel kernel, int[] inPixels, int[] outPixels, int width, int height, boolean alpha, int edgeAction) {
 		if (kernel.getHeight() == 1)
 			convolveH(kernel, inPixels, outPixels, width, height, alpha, edgeAction);
@@ -125,7 +241,14 @@ public class ConvolveFilter extends AbstractBufferedImageOp {
 	}
 	
 	/**
-	 * Convolve with a 2D kernel
+	 * Convolve with a 2D kernel.
+     * @param kernel the kernel
+     * @param inPixels the input pixels
+     * @param outPixels the output pixels
+     * @param width the width
+     * @param height the height
+     * @param alpha include alpha channel
+     * @param edgeAction what to do at the edges
 	 */
 	public static void convolveHV(Kernel kernel, int[] inPixels, int[] outPixels, int width, int height, boolean alpha, int edgeAction) {
 		int index = 0;
@@ -182,7 +305,14 @@ public class ConvolveFilter extends AbstractBufferedImageOp {
 	}
 
 	/**
-	 * Convolve with a kernel consisting of one row
+	 * Convolve with a kernel consisting of one row.
+     * @param kernel the kernel
+     * @param inPixels the input pixels
+     * @param outPixels the output pixels
+     * @param width the width
+     * @param height the height
+     * @param alpha include alpha channel
+     * @param edgeAction what to do at the edges
 	 */
 	public static void convolveH(Kernel kernel, int[] inPixels, int[] outPixels, int width, int height, boolean alpha, int edgeAction) {
 		int index = 0;
@@ -228,7 +358,14 @@ public class ConvolveFilter extends AbstractBufferedImageOp {
 	}
 
 	/**
-	 * Convolve with a kernel consisting of one column
+	 * Convolve with a kernel consisting of one column.
+     * @param kernel the kernel
+     * @param inPixels the input pixels
+     * @param outPixels the output pixels
+     * @param width the width
+     * @param height the height
+     * @param alpha include alpha channel
+     * @param edgeAction what to do at the edges
 	 */
 	public static void convolveV(Kernel kernel, int[] inPixels, int[] outPixels, int width, int height, boolean alpha, int edgeAction) {
 		int index = 0;

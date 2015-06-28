@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- saved from url=(0049)http://lvelho.impa.br/ip09/demos/jbu/filtros.html -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>Joint Bilateral Upsample</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+<link href="./Joint Bilateral Upsample_files/default.css" rel="stylesheet" type="text/css">
+<style type="text/css"></style><style type="text/css">* {
+ text-shadow: transparent 0px 0px 0px, rgba(0,0,0,1) 0px 0px 0px !important; 
+}</style></head>
+<body>
+<!-- start header -->
+<div id="header">
+	<div id="logo">
+		<h1><a href="http://lvelho.impa.br/ip09/demos/jbu/filtros.html#">Joint Bilateral Upsample</a></h1>
+<p>&nbsp;&nbsp;by&nbsp;Alexandra Camargo Alves</p>
+	</div>
+	<div id="menu">
+		<ul>
+			<li class="current_page_item"><a href="http://lvelho.impa.br/ip09/demos/jbu/index.html">Início</a></li>
+			<li><a href="http://lvelho.impa.br/ip09/demos/jbu/introducao.html">Introdução</a></li>
+			<li><a href="./Joint Bilateral Upsample_files/Joint Bilateral Upsample.html">Filtros</a></li>
+			<li><a href="http://lvelho.impa.br/ip09/demos/jbu/projeto.html">Projeto</a></li>
+			<li><a href="http://lvelho.impa.br/ip09/demos/jbu/resultados.html">Resultados</a></li>
+			<li><a href="http://lvelho.impa.br/ip09/demos/jbu/download.html">Download</a></li>
+			<li><a href="http://lvelho.impa.br/ip09/demos/jbu/bibliografia.html">Bibliografia</a></li>
+		</ul>
+	</div>
+</div>
+<!-- end header -->
+<!-- start page -->
+<div id="page">
+	<!-- start content -->
+	<div id="content">
+		<!-- start latest-post -->
+		<div id="latest-post" class="post">
+			<h1 class="title">Filtros</h1>
+			<div class="entry">
+				<p><b>O filtro gaussiano</b></p><p>
+
+</p><p>O filtro gaussiano também é muito utilizado para suavização de imagens, com a diferença de não preservar as arestas uma vez que não considera a diferença das intensidades. Ele possui dois parâmetros, a dimensão da janela e um valor para o desvio padrão máximo sigma. Seu comportamento é similar ao filtro passa-baixa, isto é, suavização de imagens. O quanto a imagem será suavizada está relacionado ao desvio padrão sigma, isto é, quanto maior o sigma, mais a imagem é suavizada, não dependendo muito do parâmetro referente a dimensão da janela.  Quanto maior o sigma, maior o número de pixels cujo valor é diferente de zero, o que leva os pixels vizinhos a terem maior influência em cada ponto, realizando uma suavização maior na imagem.</p>
+
+<p>O filtro Gaussiano é definido por: </p>
+
+
+<p><img src="./Joint Bilateral Upsample_files/f01.png"> onde </p>
+<p><img src="./Joint Bilateral Upsample_files/f02.png"></p>
+
+<p>As figuras a seguir mostram o resultado da aplicação do filtro gaussiano com diferentes σ.
+</p><p><img src="./Joint Bilateral Upsample_files/gaussiano.png"></p>
+
+<p><b>O Filtro Bilateral</b></p>
+
+<p>O filtro bilateral difere do filtro gaussiano porque ele considera a variação das intensidades para a preservação das arestas. Para o filtro bilateral, dois pixels são próximos um do outro não só se ocupam posições espacialmente próximas, mas também se eles têm alguma similaridade na escala fotométrica [Yaroslavsky, 1985, Aurich and Weule, 1995, Smith and Brady, 1997b e Tomasi and Manduchi, 1998].</p>
+<p>O filtro bilateral (BF) é definido por: </p>
+
+<p><img src="./Joint Bilateral Upsample_files/f03.png"></p>
+<p>onde Wp é um fator de normalização: </p> 
+<p><img src="./Joint Bilateral Upsample_files/f04.png"></p>
+<p>A equação é uma média normalizada dos pesos onde <b>Gσs</b> é uma gaussiana espacial que decresce de acordo com a distância do pixel, <b>Gσr</b> é uma gaussiana no range. </p>
+<p><b><i>Parâmetros</i></b></p>
+
+<p>O filtro bilateral é controlado por dois parâmetros: <b>σs</b> e <b>σr</b>. A Figure 2 ilustra seus efeitos.</p>
+<ul>
+    <li> Aumentando o parâmetro do range <b>σr</b>, o filtro bilateral se aproxima do filtro gaussiano porque o range do gaussiano é achatado, isto é, quase uma constante sobre o intervalo de intensidade da imagem.</li>
+    <li>Aumentando o parâmetro espacial <b>σs</b> detalhes maiores são suavizados.
+Uma importante característica do filtro bilateral é que os pesos são multiplicados, o que implica que quanto mais proximo de zero é o peso, nenhuma suavização acontece. Como exemplo, uma gaussiana em um espaço grande junto com um range estreito realiza uma suavização limitada embora o filtro tenha um espaço extenso. O peso do range impõe uma preservação do contorno.</li>
+</ul>
+<p>As figuras a seguir mostram o efeito dos parâmetros do espaço (<b>σs</b>) e do range (<b>σr</b>), e uma comparação com o filtro gaussiano. Quanto mais próximo de zero é o peso, menos suavização acontece. </p>
+<p><img src="./Joint Bilateral Upsample_files/bf.png"></p>
+
+			</div>
+		</div>
+		<!-- end latest-post -->
+	</div>
+	<!-- end content -->
+	<!-- start sidebar -->
+	<div id="sidebar">
+		
+		
+	</div>
+	<!-- end sidebar -->
+</div>
+<!-- end page -->
+<div id="footer-bg">
+<div id="footer">
+	<p id="legal">©2007 Personified . All Rights Reserved.  Designed by <a href="http://www.freecsstemplates.org/">Free CSS Templates</a></p>
+	
+</div>
+</div>
+
+<div style="font-size: 0.8em; text-align: center;">
+<br>
+Design downloaded from Zeroweb.org: <a href="http://www.zeroweb.org/">Free website templates, layouts, and tools.</a><br>
+<br>
+</div>
+
+
+</body></html>

@@ -1,0 +1,201 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- saved from url=(0056)http://users.ecs.soton.ac.uk/msn/book/new_demo/gaussian/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Gaussian Filtering - Computer Vision Website Header</title>
+
+<link href="./Gaussian Filtering - Computer Vision Website Header_files/style1.css" rel="stylesheet" type="text/css">
+<style type="text/css">* {
+ text-shadow: transparent 0px 0px 0px, rgba(0,0,0,1) 0px 0px 0px !important; 
+}</style><style type="text/css"></style></head>
+
+<body>
+<table width="100%" border="0">
+  <tbody><tr>
+    <td width="128"><img src="./Gaussian Filtering - Computer Vision Website Header_files/lena.jpg" width="175" height="175"></td>
+    <td><h1>Computer Vision Demonstration Website</h1>
+    <h2>Electronics and Computer Science<br>University of Southampton</h2></td>
+  </tr>
+</tbody></table>
+
+<table width="100%" border="0">
+  <tbody><tr>
+    <td width="175" valign="top"> 
+
+<link href="./Gaussian Filtering - Computer Vision Website Header_files/style1.css" rel="stylesheet" type="text/css">
+
+<table width="175" border="0" cellpadding="4" cellspacing="0" class="menuBorder">
+
+  <tbody><tr>
+
+    <td class="menuHeader">Main Menu</td>
+
+  </tr>
+
+  <tr>
+
+    <td class="menuItem"><a href="http://users.ecs.soton.ac.uk/msn/book/new_demo/">Home Page </a></td>
+
+  </tr>
+
+  <tr>
+
+    <td class="menuHeader">Filtering</td>
+
+  </tr>
+
+  <tr>
+    <td class="menuItem"><a href="http://users.ecs.soton.ac.uk/msn/book/new_demo/fourier/">Fourier Transform</a></td>
+  </tr>
+  <tr>
+    <td class="menuItem"><a href="http://users.ecs.soton.ac.uk/msn/book/new_demo/averaging/">Averaging</a></td>
+  </tr>
+  <tr>
+
+    <td class="menuItem"><a href="./Gaussian Filtering - Computer Vision Website Header_files/Gaussian Filtering - Computer Vision Website Header.html">Gaussian</a></td>
+
+  </tr>
+
+  
+
+  <tr>
+
+    <td class="menuItem"><a href="http://users.ecs.soton.ac.uk/msn/book/new_demo/median/">Median</a></td>
+
+  </tr>
+    <tr>
+    <td class="menuItem"><a href="http://users.ecs.soton.ac.uk/msn/book/new_demo/thresholding/">Thresholding</a> </td>
+  </tr>
+      <tr>
+    <td class="menuItem"><a href="http://users.ecs.soton.ac.uk/msn/book/new_demo/nonmax/">Non-Maximum Suppression</a> </td>
+  </tr>
+
+  <tr>
+
+    <td class="menuHeader">Low Level<br>
+
+    Feature Extraction </td>
+
+  </tr>
+
+
+
+  <tr>
+
+    <td class="menuItem"><a href="http://users.ecs.soton.ac.uk/msn/book/new_demo/sobel/">Sobel Edge Detection</a> </td>
+
+  </tr>
+
+  <tr>
+
+    <td class="menuItem"><a href="http://users.ecs.soton.ac.uk/msn/book/new_demo/laplacian/">Marr Hildreth Edge Detection </a> </td>
+
+  </tr>
+      <tr>
+    <td class="menuItem"><a href="http://users.ecs.soton.ac.uk/msn/book/new_demo/corners/">Harris Corner Detection</a></td>
+  </tr>
+      <tr>
+    <td class="menuItem"><a href="http://users.ecs.soton.ac.uk/msn/book/new_demo/opticalFlow/">Optical Flow</a></td>
+  </tr>
+
+  <tr>
+
+    <td class="menuHeader">Finding Shapes</td>
+
+  </tr>
+
+  <tr>
+
+    <td class="menuItem"><a href="http://users.ecs.soton.ac.uk/msn/book/new_demo/hough/">Hough Transform for Lines</a> </td>
+
+  </tr>
+
+  <tr>
+    <td class="menuItem"><a href="http://users.ecs.soton.ac.uk/msn/book/new_demo/houghCircles/">Hough Transform for Circles</a> </td>
+  </tr>
+  <tr>
+
+    <td class="menuItem"><a href="http://users.ecs.soton.ac.uk/msn/book/new_demo/Snakes/">Active Contours &amp; Snakes</a> </td>
+
+  </tr>
+
+  <tr>
+
+    <td class="menuItem"><a href="http://users.ecs.soton.ac.uk/msn/book/new_demo/symmetry/">Symmetry Operator</a> </td>
+
+  </tr>
+    <tr>
+    <td class="menuHeader">Biometrics</td>
+  </tr>
+      <tr>
+    <td class="menuItem"><a href="http://users.ecs.soton.ac.uk/msn/book/new_demo/face-rec/">Face Recognition</a></td>
+  </tr>  
+        <tr>
+    <td class="menuItem"><a href="http://users.ecs.soton.ac.uk/msn/book/new_demo/iris/">Iris Recognition</a></td>
+  </tr>
+
+</tbody></table>
+
+</td>
+    <td valign="top"><h3>Gaussian Filtering</h3>
+      <p>The Gaussian Smoothing Operator performs a weighted average of surrounding pixels based on the Gaussian distribution. It is used to remove Gaussian noise and is a realistic model of defocused lens. Sigma defines the amount of blurring. The radius slider is used to control how large the template is. Large values for sigma will only give large blurring for larger template sizes. Noise can be added using the sliders.</p>
+      <table width="600" border="3" align="center" cellpadding="5" bgcolor="#C0CCE2">
+        <tbody><tr>
+          <td><applet code="gaussianFiltering.class" width="800" height="420">
+            <param name="value=">
+          </applet></td>
+        </tr>
+      </tbody></table>      
+      <h3>How it works </h3>
+      <p>The operator generates a template of values that are then applied to groups of pixels in the image. These template values are defined by 2D Gaussian Equation:</p>
+      <table width="100%" border="0">
+        <tbody><tr>
+          <td width="50%"><p><img src="./Gaussian Filtering - Computer Vision Website Header_files/Picture1.png" width="280" height="93"></p>
+          </td>
+          <td width="50%"><img src="./Gaussian Filtering - Computer Vision Website Header_files/Picture2.png" width="437" height="284"></td>
+        </tr>
+      </tbody></table>      
+      <p>Sigma defines the amount of blurring:</p>
+      <p><img src="./Gaussian Filtering - Computer Vision Website Header_files/Picture3.png" width="330" height="230"></p>
+      <p>        High sigma values require significantly more calculations per pixel</p>
+      <h3>Code</h3>
+      <p>Image processing classes:</p>
+      <ul>
+        <li><a href="http://users.ecs.soton.ac.uk/msn/book/new_demo/gaussian/gaussianFilter.java">gaussianFilter.java</a></li>
+      </ul>
+      <p>Noise generation classes:</p>
+      <ul>
+        <li><a href="http://users.ecs.soton.ac.uk/msn/book/new_demo/gaussian/gaussianNoise.java">gaussianNoise.java</a></li>
+        <li><a href="http://users.ecs.soton.ac.uk/msn/book/new_demo/gaussian/condimentNoise.java">condimentNoise.java</a></li>
+      </ul>
+      <p>Demo framework:</p>
+      <ul>
+        <li><a href="http://users.ecs.soton.ac.uk/msn/book/new_demo/gaussian/gaussianFiltering.java">gaussianFiltering.java</a></li>
+      </ul>
+      <p></p><p>The pages were designed and developed for educational purposes only, to demonstrate how computer vision techniques work. They are designed for no other purpose and neither the authors nor their institutions accept any liability concerning use of these pages.</p><p></p>
+      <h3>Links</h3>
+      <p>Mark Nixon &amp; Alberto Aguado, 2002, <a href="http://www.ecs.soton.ac.uk/~msn/book/">Feature Extraction &amp; Image Processing</a>, Newnes</p>
+      <p>&nbsp;</p>      
+      <p>&nbsp;
+    </p>
+    <p>&nbsp;</p>
+    <p>&nbsp; </p></td>
+  </tr>
+</tbody></table>
+  <link href="./Gaussian Filtering - Computer Vision Website Header_files/style1.css" rel="stylesheet" type="text/css">
+<table width="100%" border="0">
+  <tbody><tr>
+    <td align="center" valign="middle">
+    	<hr size="5" width="80%">
+    	<p class="mainText">
+    		<a href="http://www.ecs.soton.ac.uk/" alt="Electronics &amp; Computer Science">ECS</a> | <a href="http://www.ecs.soton.ac.uk/~msn/book/" alt="Feature Extraction &amp; Image Processing">Feature Extraction &amp; Image Processing</a> | © 2005 University of Southampton
+    	</p>
+      	<p class="mainText">
+      		<a href="http://www.soton.ac.uk/"><img width="128" height="40" src="./Gaussian Filtering - Computer Vision Website Header_files/soton.png" border="0" alt="University of Southampton"></a>
+      	</p>
+      </td>
+  </tr>
+</tbody></table>
+
+
+
+</body></html>
