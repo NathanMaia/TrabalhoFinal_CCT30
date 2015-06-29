@@ -15,12 +15,19 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import control.ControlePrincipal;
+
+
 public class principalJanela extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 123456;
 	private JFileChooser chooser;
 	private JPanel contentPane;
-	private File imagem;
-
+	private File imagem = null;
+	
 
 	public principalJanela() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -43,15 +50,15 @@ public class principalJanela extends JFrame {
 
 		//Torna o botão visível
 		btnComprimirSalvar.setVisible(true);
-
+		btnComprimirSalvar.setEnabled(false);
+		
 		//Define acao do botão
 		btnFiltrarImagem.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
-				btnFiltrarImagem.setEnabled(false);;
-				btnComprimirSalvar.setVisible(true);
+				//btnFiltrarImagem.setEnabled(false);;
+				btnComprimirSalvar.setEnabled(true);
 				escolheArquivo();
-
 			}
 		});
 
@@ -80,7 +87,9 @@ public class principalJanela extends JFrame {
 		if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
 		{
 			//imagemURL = chooser.getSelectedFile().getAbsolutePath();
-			imagem = chooser.getSelectedFile();
+			imagem = chooser.getSelectedFile();			
+			ControlePrincipal cp = new ControlePrincipal();
+			cp.escolheImagem(imagem);
 			//Map<String, Integer> result = new HashMap<String, Integer>();
 			//File directory = new File(chooser.getSelectedFile().getAbsolutePath()); //This is where you need to change.
 
@@ -112,6 +121,10 @@ public class principalJanela extends JFrame {
 	}
 	
 	
+
+	public void setImagem(File imagem) {
+		this.imagem = imagem;
+	}
 
 	public File getImagem() {
 		return imagem;

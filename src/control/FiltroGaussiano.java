@@ -2,7 +2,6 @@ package control;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.Kernel;
-import java.awt.image.*;
 
 /**
  * A filter which applies Gaussian blur to an image. This is a subclass of ConvolveFilter
@@ -49,8 +48,7 @@ public class FiltroGaussiano extends ConvolveFilter {
 		return radius;
 	}
 
-    public BufferedImage filter( BufferedImage src, BufferedImage dst ) {
-        this.filter(ai.getImagem(), dst);
+    public BufferedImage filter( BufferedImage src, BufferedImage dst ) {        
     	int width = src.getWidth();
         int height = src.getHeight();
 
