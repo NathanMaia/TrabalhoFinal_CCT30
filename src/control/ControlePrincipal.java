@@ -2,8 +2,13 @@ package control;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 import view.principalJanela;
+
+
 
 public class ControlePrincipal {
 	public void startApp(){
@@ -19,6 +24,13 @@ public class ControlePrincipal {
 	
 	public void aplicaFiltro(BufferedImage img){
 		FiltroGaussiano filtro = new FiltroGaussiano();
-		filtro.filter(img, null);
+		BufferedImage dstImg = filtro.filter(img, null);
+		File dstFile = new File("imgFiltrada.png");
+	    try {
+			ImageIO.write(dstImg, "png", dstFile);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			throw new RuntimeException("Não foi possível salvar o arquivo filtrado!");
+		}
 	}
 }

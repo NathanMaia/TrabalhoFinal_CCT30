@@ -11,6 +11,7 @@ public class AbreImagem {
 
 	private BufferedImage img = null;
 	private File srcImg;	
+	
 	public void abreImagem(File imagem) {
 		
 		srcImg = imagem;	
