@@ -2,8 +2,6 @@ package control;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.Kernel;
-
-
 import java.awt.image.*;
 
 /**
@@ -13,10 +11,11 @@ import java.awt.image.*;
  */
 public class FiltroGaussiano extends ConvolveFilter {
 
-	static final long serialVersionUID = 5377089073023183684L;
+	//static final long serialVersionUID = 5377089073023183684L;
 
 	protected float radius;
 	protected Kernel kernel;
+	public AbreImagem ai = new AbreImagem();
 	
 	/**
 	 * Construct a Gaussian filter
@@ -51,7 +50,8 @@ public class FiltroGaussiano extends ConvolveFilter {
 	}
 
     public BufferedImage filter( BufferedImage src, BufferedImage dst ) {
-        int width = src.getWidth();
+        this.filter(ai.getImagem(), dst);
+    	int width = src.getWidth();
         int height = src.getHeight();
 
         if ( dst == null )

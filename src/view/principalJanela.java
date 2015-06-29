@@ -4,6 +4,7 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -18,7 +19,7 @@ public class principalJanela extends JFrame {
 
 	private JFileChooser chooser;
 	private JPanel contentPane;
-	private String imagem;
+	private File imagem;
 
 
 	public principalJanela() {
@@ -78,7 +79,8 @@ public class principalJanela extends JFrame {
 
 		if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
 		{
-			imagem = chooser.getSelectedFile().getAbsolutePath();
+			//imagemURL = chooser.getSelectedFile().getAbsolutePath();
+			imagem = chooser.getSelectedFile();
 			//Map<String, Integer> result = new HashMap<String, Integer>();
 			//File directory = new File(chooser.getSelectedFile().getAbsolutePath()); //This is where you need to change.
 
@@ -108,8 +110,10 @@ public class principalJanela extends JFrame {
 	        }*/	        	       
 		}			    	
 	}
+	
+	
 
-	public String getImagem() {
+	public File getImagem() {
 		return imagem;
 	}
 

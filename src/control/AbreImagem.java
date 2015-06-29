@@ -1,34 +1,41 @@
 package control;
 
-import java.awt.Image;
-import java.awt.Toolkit;
-
-import javax.swing.JOptionPane;
-
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import view.principalJanela;
+import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 
 public class AbreImagem {
 
-	private Image img;
-	private String srcImg;
+	private BufferedImage img = null;
+	private File srcImg;	
 	private principalJanela pj = new principalJanela();
 
-	public void abreImagem(){
-
-		srcImg= pj.getImagem() ;          
-
+	public void abreImagem() {
+		
+		srcImg = pj.getImagem();	
+		
+		try {
+			if(srcImg.isFile()){
+			img = ImageIO.read(srcImg);
+			}			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			throw new RuntimeException("Não foi possível abrir o arquivo!");
+		}
 		// Obtém o Toolkit padrão
-		Toolkit toolkit = Toolkit.getDefaultToolkit();
-		setImagem(toolkit.getImage(srcImg));
-
-		JOptionPane.showMessageDialog(null,"A imagem foi carregada");
+		//Toolkit toolkit = Toolkit.getDefaultToolkit();
+		//setImagem(toolkit.getImage(srcImg));
+		JOptionPane.showMessageDialog(null,"A imagem foi carregada com sucesso!");
 	}
 
-	public Image getImagem() {
+	public BufferedImage getImagem() {
 		return img;
 	}
 
-	public void setImagem(Image imagem) {
+	public void setImagem(BufferedImage imagem) {
 		this.img = imagem;
 	}
 }
