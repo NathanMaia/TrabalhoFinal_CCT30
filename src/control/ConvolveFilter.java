@@ -14,7 +14,7 @@ import java.awt.geom.*;
  */
 public class ConvolveFilter extends AbstractBufferedImageOp {
 
-	static final long serialVersionUID = 2239251672685254626L;
+	//static final long serialVersionUID = 2239251672685254626L;
 	
 	public static int ZERO_EDGES = 0;
 	public static int CLAMP_EDGES = 1;

@@ -27,7 +27,7 @@ public class principalJanela extends JFrame {
 	private JFileChooser chooser;
 	private JPanel contentPane;
 	private File imagem = null;
-	
+	public ControlePrincipal cp; 
 
 	public principalJanela() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -66,7 +66,7 @@ public class principalJanela extends JFrame {
 
 
 			public void actionPerformed(ActionEvent arg0) {
-				/*APLICAR COMPRESSÃO E SALVAR*/				
+				cp.aplicaCompressao(); 					
 			}
 		});
 
@@ -88,7 +88,7 @@ public class principalJanela extends JFrame {
 		{
 			//imagemURL = chooser.getSelectedFile().getAbsolutePath();
 			imagem = chooser.getSelectedFile();			
-			ControlePrincipal cp = new ControlePrincipal();
+			cp = new ControlePrincipal();
 			cp.escolheImagem(imagem);
 			//Map<String, Integer> result = new HashMap<String, Integer>();
 			//File directory = new File(chooser.getSelectedFile().getAbsolutePath()); //This is where you need to change.
