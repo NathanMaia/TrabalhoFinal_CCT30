@@ -3,6 +3,8 @@ package control;
 import java.awt.image.BufferedImage;
 import java.awt.image.Kernel;
 
+import javax.swing.JOptionPane;
+
 /**
  * A filter which applies Gaussian blur to an image. This is a subclass of ConvolveFilter
  * which simply creates a kernel with a Gaussian distribution for blurring.
@@ -113,11 +115,12 @@ public class FiltroGaussiano extends ConvolveFilter {
 	/**
 	 * Make a Gaussian blur kernel.
 	 */
-	public static Kernel makeKernel(float radius) {
-		int r = (int)Math.ceil(radius);
+	public static Kernel makeKernel(float radius) {			
+		//float sigma = radius/3;
+		float sigma = Float.parseFloat(JOptionPane.showInputDialog("Entre com o valor de sigma: "));
+		int r = (int)Math.ceil(sigma*3);
 		int rows = r*2+1;
 		float[] matrix = new float[rows];
-		float sigma = radius/3;
 		float sigma22 = 2*sigma*sigma;
 		float sigmaPi2 = 2*ImageMath.PI*sigma;
 		float sqrtSigmaPi2 = (float)Math.sqrt(sigmaPi2);

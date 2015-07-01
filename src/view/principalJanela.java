@@ -5,6 +5,7 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -66,7 +67,12 @@ public class principalJanela extends JFrame {
 
 
 			public void actionPerformed(ActionEvent arg0) {
-				cp.aplicaCompressao(); 					
+				try {
+					cp.aplicaCompressao();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} 					
 			}
 		});
 
