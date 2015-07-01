@@ -30,7 +30,6 @@ public class Compressor {
 	}
 
 
-	// LAZY STATIC METHODS - ADDED BY: DAN!
 	public static String compressStr(String data) {
 		Compressor lz = new Compressor();
 		return lz.compress(data, null);
@@ -40,29 +39,11 @@ public class Compressor {
 		return lz.decompress(data);
 	}
 
-	// PUBLIC METHODS
-
-	/**
-	 * Compress string data using the LZ77 algorithm.
-	 * 
-	 * @param data
-	 *            String data to compress
-	 * @return LZ77 compressed string
-	 */
 	public String compress(String data) {
 
 		return compress(data, null);
 	}
 
-	/**
-	 * Compress string data using the LZ77 algorithm.
-	 * 
-	 * @param data
-	 *            String data to compress
-	 * @param windowLength
-	 *            Optional window length
-	 * @return LZ77 compressed string
-	 */
 	public String compress(String data, Integer windowLength) {
 
 		if (windowLength == null)
@@ -184,8 +165,6 @@ public class Compressor {
 
 		return decompressed;
 	}
-
-	// PRIVATE METHODS
 
 	private String encodeReferenceInt(int value, int width) {
 
